@@ -32,31 +32,31 @@ CONTACT_WEBHOOK_URL=https://your-secure-endpoint.example/enquiries
 
 The endpoint must accept a JSON `POST`. Keep provider credentials and spam/rate-limiting logic in that secure endpoint. When the variable is absent, the interface tells the visitor to email `hello@yulaverse.studio` instead.
 
-## Editable content
+## Content
 
 - Case-study content: `data/case-studies.ts`
 - Services and process content: `components/services.tsx` and `components/process.tsx`
-- About placeholders: `components/about.tsx`
+- Studio profile: `components/about.tsx`
 - Contact choices and validation: `data/contact.ts`
-- Email, social profiles and footer navigation: `components/footer.tsx`
+- Email and footer navigation: `components/footer.tsx`
 
-All three portfolio entries are labelled as concept projects. Replace their data without changing the reusable route or card components.
+The portfolio currently features Appcarz, A1 Walsall Radio, Tutoring for the Deaf and Shongo Shomithi. Their shared structure lives in `data/case-studies.ts`.
 
 ## Brand assets
 
-The supplied brand-board PNG is preserved at `public/brand/yulaverse-brand-board.png`. All site logos are lossless crops of that supplied source, with no redrawing, recolouring, distortion or regeneration:
+The nine official 4x PNGs supplied by Yulaverse Studio are preserved exactly in `public/brand`. The site uses no generated, redrawn or recoloured logo assets:
 
-- `logo-horizontal-dark-mono.png`
-- `logo-horizontal-light.png`
-- `logo-stacked-dark.png`
-- `logo-stacked-light.png`
-- `monogram-dark.png`
-- `monogram-light.png`
-- `favicon.png`
+- `official-horizontal-black.png`
+- `official-horizontal-gold.png`
+- `official-horizontal-light.png`
+- `official-stacked-black.png`
+- `official-stacked-gold.png`
+- `official-stacked-light.png`
+- `official-monogram-black.png`
+- `official-monogram-gold.png`
+- `official-monogram-light.png`
 
 ## Production notes
 
 - Update `metadataBase` in `app/layout.tsx` if the final domain changes.
-- Replace placeholder founder and story content before launch.
-- Replace generic social profile URLs with studio-specific destinations.
 - Add rate limiting and bot protection at the deployment edge or webhook provider.

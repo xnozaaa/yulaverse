@@ -15,13 +15,13 @@ export function CaseStudyVisual({
     >
       {study.theme === "ember" && (
         <>
-          <div className="ember-word">NAMI</div>
+          <div className="ember-word">{study.visualTitle}</div>
           <div className="ember-circle" />
           <div className="ember-card">
-            <span>Stay slowly</span>
-            <strong>01—07</strong>
+            <span>{study.visualEyebrow}</span>
+            <strong>{study.visualMetric}</strong>
           </div>
-          <div className="ember-caption">HOUSE / HOSPITALITY / 2026</div>
+          <div className="ember-caption">{study.visualCaption}</div>
         </>
       )}
 
@@ -29,28 +29,43 @@ export function CaseStudyVisual({
         <>
           <div className="signal-grid" />
           <div className="signal-arc" />
-          <div className="signal-title">A1</div>
+          <div className="signal-title">{study.visualTitle}</div>
           <div className="signal-panel">
-            <span>INFRASTRUCTURE / ACTIVE</span>
-            <strong>82.4</strong>
+            <span>{study.visualEyebrow}</span>
+            <strong>{study.visualMetric}</strong>
             <i />
           </div>
-          <div className="signal-mark">ARC ONE</div>
+          <div className="signal-mark">{study.visualCaption}</div>
         </>
       )}
 
       {study.theme === "paper" && (
         <>
-          <div className="paper-type">SORA</div>
+          <div className="paper-type">{study.visualTitle}</div>
           <div className="paper-object">
             <span />
             <i />
           </div>
           <div className="paper-copy">
-            <span>OBJECT 03</span>
-            <strong>Form, held in quiet balance.</strong>
+            <span>{study.visualEyebrow}</span>
+            <strong>{study.visualMetric}</strong>
           </div>
           <div className="paper-rule" />
+          <div className="paper-caption">{study.visualCaption}</div>
+        </>
+      )}
+
+      {study.theme === "community" && (
+        <>
+          <div className="community-grid" />
+          <div className="community-orbit community-orbit--outer" />
+          <div className="community-orbit community-orbit--inner" />
+          <div className="community-title">{study.visualTitle}</div>
+          <div className="community-copy">
+            <span>{study.visualEyebrow}</span>
+            <strong>{study.visualMetric}</strong>
+          </div>
+          <div className="community-caption">{study.visualCaption}</div>
         </>
       )}
     </div>

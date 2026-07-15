@@ -19,10 +19,10 @@ export async function generateMetadata({
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
   return {
-    title: `${study.name} — Concept project`,
+    title: `${study.name} — Selected project`,
     description: study.summary,
     openGraph: {
-      title: `${study.name} — Yulaverse Studio concept project`,
+      title: `${study.name} — Yulaverse Studio project`,
       description: study.summary,
     },
   };
@@ -63,7 +63,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <CaseStudyVisual study={study} />
             </div>
 
-            <div className="mt-8 grid gap-5 border-y border-ink/20 py-6 text-xs font-semibold uppercase tracking-[0.15em] sm:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-8 grid gap-5 border-y border-ink/20 py-6 text-xs font-semibold uppercase tracking-[0.15em] sm:grid-cols-3">
               <div>
                 <span className="block text-ink/40">Industry</span>
                 {study.industry}
@@ -73,12 +73,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 {study.services.join(" / ")}
               </div>
               <div>
-                <span className="block text-ink/40">Year</span>
-                {study.year}
-              </div>
-              <div className="sm:col-span-3 lg:col-span-1 lg:text-right">
-                <span className="block text-ink/40">Status</span>
-                Concept only — not a real client
+                <span className="block text-ink/40">Portfolio</span>
+                {study.label}
               </div>
             </div>
           </div>
@@ -87,11 +83,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="section-pad border-t border-ink/15">
           <div className="site-shell grid gap-12 lg:grid-cols-12">
             <p className="eyebrow text-indigo lg:col-span-3">
-              Creative direction
+              Project direction
             </p>
             <div className="lg:col-span-7">
               <h2 className="text-4xl font-extrabold tracking-[-0.055em] sm:text-6xl">
-                The idea behind the system.
+                The thinking behind the work.
               </h2>
               <p className="mt-8 text-xl leading-9 text-ink/65">
                 {study.direction}
@@ -113,7 +109,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="bg-indigo py-16 text-ivory sm:py-24">
           <div className="site-shell flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="eyebrow text-ivory/60">Next concept project</p>
+              <p className="eyebrow text-ivory/60">Next selected project</p>
               <h2 className="mt-5 text-5xl font-extrabold tracking-[-0.06em] sm:text-7xl">
                 {nextStudy.name}
               </h2>

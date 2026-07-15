@@ -57,7 +57,7 @@ export function Hero() {
 
           <div className="lg:col-span-4 lg:pb-2">
             <motion.div
-              className="hero-mark-wrap mx-auto mb-10 w-full max-w-[260px] lg:ml-auto lg:mr-0"
+              className="hero-mark-wrap mx-auto mb-6 w-full max-w-[440px] lg:ml-auto lg:mr-0"
               initial={false}
               animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
               transition={{
@@ -66,8 +66,6 @@ export function Hero() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <div className="hero-orbit" aria-hidden="true" />
-              <span className="four-star hero-star" aria-hidden="true" />
               <Logo
                 variant="monogram-light"
                 className="relative z-10 h-auto w-full"

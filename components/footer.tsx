@@ -42,37 +42,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <div className="md:col-span-2">
-            <p className="eyebrow text-ivory/40">Social</p>
-            <ul className="mt-5 space-y-3">
-              <li>
-                <a
-                  className="footer-link"
-                  href="https://www.instagram.com/"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  Instagram{" "}
-                  <span className="sr-only">(opens in a new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="footer-link"
-                  href="https://www.linkedin.com/"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  LinkedIn <span className="sr-only">(opens in a new tab)</span>
-                </a>
-              </li>
-            </ul>
-            <p className="mt-4 text-[0.65rem] leading-5 text-ivory/35">
-              Replace with studio profile URLs.
-            </p>
-          </div>
-
-          <div className="flex items-start justify-end md:col-span-2">
+          <div className="flex items-start justify-end md:col-span-2 md:col-start-11">
             <a
               href="#top"
               className="footer-orbit group grid size-28 place-items-center rounded-full border border-ivory/20"

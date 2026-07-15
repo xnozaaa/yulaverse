@@ -245,8 +245,7 @@ export function ContactForm() {
           role="status"
           aria-live="polite"
         >
-          {status.message ??
-            "Typical response time can be added once studio operations are confirmed."}
+          {status.message}
         </div>
       </div>
     </form>

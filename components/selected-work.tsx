@@ -15,9 +15,8 @@ export function SelectedWork() {
               Identity worlds, built to be remembered.
             </h2>
             <p className="mt-8 max-w-2xl text-lg leading-8 text-ink/60">
-              Yulaverse Studio creates distinctive brand identities and premium
-              websites for startups ready to look established, trusted and
-              unforgettable.
+              Selected identity and digital work across mobility, transport,
+              specialist education and community-led organisations.
             </p>
           </Reveal>
         </div>
@@ -40,17 +39,15 @@ export function SelectedWork() {
                     <span>{study.services.slice(0, 2).join(" + ")}</span>
                   </div>
                   <div className="sm:text-right">
-                    <span className="block text-ink/45">Status / Year</span>
-                    <span>
-                      {study.label} · {study.year}
-                    </span>
+                    <span className="block text-ink/45">Portfolio</span>
+                    <span>{study.label}</span>
                   </div>
                 </div>
 
                 <Link
                   href={`/work/${study.slug}`}
                   className="case-visual-link mt-5 block overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo"
-                  aria-label={`View ${study.name} concept project`}
+                  aria-label={`View ${study.name} project`}
                 >
                   <CaseStudyVisual study={study} />
                 </Link>
