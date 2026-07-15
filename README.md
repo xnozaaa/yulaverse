@@ -44,7 +44,7 @@ The portfolio currently features Appcarz, A1 Walsall Radio, Tutoring for the Dea
 
 ## Brand assets
 
-The nine official 4x PNGs supplied by Yulaverse Studio are preserved exactly in `public/brand`. The site uses no generated, redrawn or recoloured logo assets:
+The complete official 4x logo set supplied by Yulaverse Studio is preserved exactly in `public/brand`. Duplicate exports from the source folder are stored once. The site uses no generated, redrawn or recoloured logo assets:
 
 - `official-horizontal-black.png`
 - `official-horizontal-gold.png`
@@ -55,6 +55,10 @@ The nine official 4x PNGs supplied by Yulaverse Studio are preserved exactly in 
 - `official-monogram-black.png`
 - `official-monogram-gold.png`
 - `official-monogram-light.png`
+- `official-tagline-horizontal.png`
+- `official-tagline-horizontal-light-bg.png`
+- `official-tagline-condensed.png`
+- `official-tagline-condensed-light-bg.png`
 
 ## Production notes
 

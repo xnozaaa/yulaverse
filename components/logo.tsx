@@ -10,7 +10,11 @@ type LogoProps = {
     | "stacked-light"
     | "monogram-dark"
     | "monogram-gold"
-    | "monogram-light";
+    | "monogram-light"
+    | "tagline-horizontal"
+    | "tagline-horizontal-light-bg"
+    | "tagline-condensed"
+    | "tagline-condensed-light-bg";
   className?: string;
   priority?: boolean;
 };
@@ -70,6 +74,30 @@ const logos = {
     height: 4320,
     alt: "Yulaverse Studio monogram",
   },
+  "tagline-horizontal": {
+    src: "/brand/official-tagline-horizontal.png",
+    width: 7680,
+    height: 4320,
+    alt: "Yulaverse Studio — Brand Identity, Web Design, Creative Direction",
+  },
+  "tagline-horizontal-light-bg": {
+    src: "/brand/official-tagline-horizontal-light-bg.png",
+    width: 7680,
+    height: 4320,
+    alt: "Yulaverse Studio — Brand Identity, Web Design, Creative Direction",
+  },
+  "tagline-condensed": {
+    src: "/brand/official-tagline-condensed.png",
+    width: 7680,
+    height: 5335,
+    alt: "Yulaverse Studio — Brand Identity, Web Design, Creative Direction",
+  },
+  "tagline-condensed-light-bg": {
+    src: "/brand/official-tagline-condensed-light-bg.png",
+    width: 7680,
+    height: 5336,
+    alt: "Yulaverse Studio — Brand Identity, Web Design, Creative Direction",
+  },
 } as const;
 
 export function Logo({ variant = "dark", className, priority }: LogoProps) {
@@ -86,7 +114,9 @@ export function Logo({ variant = "dark", className, priority }: LogoProps) {
       sizes={
         variant.startsWith("monogram") || variant.startsWith("stacked")
           ? "(max-width: 768px) 360px, 560px"
-          : "(max-width: 768px) 260px, 520px"
+          : variant.startsWith("tagline")
+            ? "(max-width: 768px) 360px, 960px"
+            : "(max-width: 768px) 260px, 520px"
       }
     />
   );
