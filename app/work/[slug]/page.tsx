@@ -56,6 +56,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <p className="mt-8 max-w-3xl text-xl leading-8 text-ink/65">
                   {study.summary}
                 </p>
+                <a
+                  href={study.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-8 inline-flex items-center gap-2 border-b border-indigo/40 pb-2 text-sm font-bold text-indigo"
+                >
+                  Visit live project <ArrowUpRight className="size-4" />
+                </a>
               </div>
             </div>
 
@@ -63,7 +71,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <CaseStudyVisual study={study} />
             </div>
 
-            <div className="mt-8 grid gap-5 border-y border-ink/20 py-6 text-xs font-semibold uppercase tracking-[0.15em] sm:grid-cols-3">
+            <div className="mt-8 grid gap-5 border-y border-ink/20 py-6 text-xs font-semibold uppercase tracking-[0.15em] sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <span className="block text-ink/40">Industry</span>
                 {study.industry}
@@ -75,6 +83,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <div>
                 <span className="block text-ink/40">Portfolio</span>
                 {study.label}
+              </div>
+              <div className="lg:text-right">
+                <span className="block text-ink/40">Website</span>
+                <a
+                  href={study.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 border-b border-ink/25"
+                >
+                  View live <ArrowUpRight className="size-3" />
+                </a>
               </div>
             </div>
           </div>
@@ -92,6 +111,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <p className="mt-8 text-xl leading-9 text-ink/65">
                 {study.direction}
               </p>
+              <div className="mt-14 grid gap-px overflow-hidden border border-ink/15 bg-ink/15 sm:grid-cols-3">
+                {study.highlights.map((highlight) => (
+                  <div className="bg-ivory p-6" key={highlight.label}>
+                    <strong className="block text-4xl font-extrabold tracking-[-0.05em] text-indigo">
+                      {highlight.value}
+                    </strong>
+                    <p className="mt-3 text-sm leading-6 text-ink/60">
+                      {highlight.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
               <div className="mt-14 grid gap-8 border-t border-ink/20 pt-6 sm:grid-cols-3">
                 {study.services.map((service, serviceIndex) => (
                   <div key={service}>

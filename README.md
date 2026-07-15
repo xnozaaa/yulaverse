@@ -40,7 +40,7 @@ The endpoint must accept a JSON `POST`. Keep provider credentials and spam/rate-
 - Contact choices and validation: `data/contact.ts`
 - Email and footer navigation: `components/footer.tsx`
 
-The portfolio currently features Appcarz, A1 Walsall Radio, Tutoring for the Deaf and Shongo Shomithi. Their shared structure lives in `data/case-studies.ts`.
+The portfolio currently features App Carz, A1 Walsall Radio Taxis, Tutoring for the Deaf and Shongo Shomithi. Their shared structure, verified project facts and live-site links live in `data/case-studies.ts`.
 
 ## Brand assets
 

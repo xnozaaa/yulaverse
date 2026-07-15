@@ -4,8 +4,10 @@ export type CaseStudy = {
   label: "Selected Project";
   industry: string;
   services: string[];
+  website: string;
   summary: string;
   direction: string;
+  highlights: Array<{ value: string; label: string }>;
   theme: "ember" | "signal" | "paper" | "community";
   visualTitle: string;
   visualEyebrow: string;
@@ -16,67 +18,91 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "appcarz",
-    name: "Appcarz",
+    name: "App Carz",
     label: "Selected Project",
-    industry: "Mobility & private hire",
-    services: ["Digital design", "App experience", "Brand direction"],
+    industry: "Private hire & passenger transport",
+    services: ["Web design", "Booking journeys", "Content architecture"],
+    website: "https://appcarz.co.uk",
     summary:
-      "A mobile-first booking experience that makes local private hire feel fast, direct and dependable.",
+      "A conversion-focused digital presence for a 24/7 West Midlands private-hire service, bringing everyday journeys, airport transfers and event transport into one clear booking experience.",
     direction:
-      "The work focuses on the moments riders need most: rapid booking, clear price expectations, driver and vehicle details, and confident journey tracking—organised into a crisp, high-contrast experience.",
+      "The experience leads with availability, safety and straightforward booking, then helps customers choose between private hire, fixed-fare airport transfers and special-event travel. Fleet guidance—from saloons and executive cars to estates and eight-seat minibuses—supports confident decisions before booking.",
+    highlights: [
+      { value: "24/7", label: "Service availability" },
+      { value: "15+", label: "Years of combined experience" },
+      { value: "Fixed", label: "Airport fares" },
+    ],
     theme: "ember",
     visualTitle: "APP",
-    visualEyebrow: "BOOK / TRACK / ARRIVE",
-    visualMetric: "10s",
-    visualCaption: "APP CARZ / MOBILITY EXPERIENCE",
+    visualEyebrow: "PRIVATE HIRE / AIRPORT / EVENTS",
+    visualMetric: "24/7",
+    visualCaption: "WEST MIDLANDS / FIXED AIRPORT FARES",
   },
   {
     slug: "a1-walsall-radio",
-    name: "A1 Walsall Radio",
+    name: "A1 Walsall Radio Taxis",
     label: "Selected Project",
-    industry: "Passenger transport",
-    services: ["Web design", "Content structure", "Conversion UX"],
+    industry: "Local, school & contract transport",
+    services: ["Web design", "Service architecture", "Conversion UX"],
+    website: "https://walsallradiotaxis.com",
     summary:
-      "A clear digital presence for a long-standing Walsall transport service, built around trust, access and fast booking.",
+      "A service-led website for a Walsall transport operator serving schools, businesses, local families, wheelchair users and airport passengers around the clock.",
     direction:
-      "The experience brings school, corporate, wheelchair-accessible and airport transport into one straightforward service system, helping local families and organisations find the right journey and act quickly.",
+      "The content system makes a broad transport offer easy to navigate: safeguarding-focused home-to-school journeys, council and academy contracts, workplace travel, on-site booking tablets, wheelchair-accessible vehicles and fixed-price airport transfers. Trust signals centre on four decades of local service, licensing and punctuality.",
+    highlights: [
+      { value: "1986", label: "Serving Walsall since" },
+      { value: "24/7", label: "Service and support" },
+      { value: "40+", label: "Years of trusted transport" },
+    ],
     theme: "signal",
     visualTitle: "A1",
-    visualEyebrow: "WALSALL / 24 HOUR SERVICE",
-    visualMetric: "24/7",
-    visualCaption: "RADIO TAXIS / LOCAL TRANSPORT",
+    visualEyebrow: "SCHOOLS / BUSINESS / ACCESS",
+    visualMetric: "1986",
+    visualCaption: "WALSALL / TRUSTED LOCAL TRANSPORT",
   },
   {
     slug: "tutoring-for-the-deaf",
     name: "Tutoring for the Deaf",
     label: "Selected Project",
-    industry: "Specialist education",
-    services: ["Brand direction", "Accessible web design", "Content strategy"],
+    industry: "Deaf education & online tutoring",
+    services: ["Accessible web design", "Content strategy", "Consultation UX"],
+    website: "https://tutoringforthedeaf.co.uk",
     summary:
-      "An accessible education platform connecting deaf secondary students with specialist English and maths tutoring.",
+      "An accessible online tutoring platform for secondary-age deaf and hearing-impaired learners seeking personalised English, maths and GCSE support.",
     direction:
-      "Strong visual hierarchy, plain-language content and clear consultation pathways help parents and learners understand the offer: personalised online tutoring, visual teaching methods and BSL-supported learning where appropriate.",
+      "The journey explains who the service supports, how communication is adapted and what families can expect from a consultation through to regular 1:1 lessons. BSL-supported teaching, visual explanations, EHCP awareness, safeguarding and parent updates are presented as core parts of the offer rather than secondary details.",
+    highlights: [
+      { value: "10+", label: "Years in deaf education" },
+      { value: "1:1", label: "Personalised online lessons" },
+      { value: "GCSE", label: "English and maths support" },
+    ],
     theme: "paper",
     visualTitle: "LEARN",
-    visualEyebrow: "ACCESSIBLE / 1:1 / ONLINE",
-    visualMetric: "11–18",
-    visualCaption: "ENGLISH + MATHS / BSL SUPPORT",
+    visualEyebrow: "BSL / 1:1 / GCSE",
+    visualMetric: "10+",
+    visualCaption: "ENGLISH + MATHS / VISUAL LEARNING",
   },
   {
     slug: "shongo-shomithi",
     name: "Shongo Shomithi",
     label: "Selected Project",
-    industry: "Community & culture",
-    services: ["Brand identity", "Web design", "Community platform"],
+    industry: "Community, culture & live events",
+    services: ["Brand identity", "Event website", "Participation UX"],
+    website: "https://www.shongoshomithi.co.uk",
     summary:
-      "A warm, contemporary digital home designed to bring community, culture and shared activity into one place.",
+      "A community platform connecting Bangladeshi heritage, family participation and Walsall’s first Bangla Community Day 2026.",
     direction:
-      "The system balances heritage with forward momentum, using a welcoming visual language and clear pathways for news, participation and connection across the community.",
+      "The digital experience gives attendees, volunteers, stall holders and sponsors clear routes into the event while presenting the wider movement: connecting generations, preserving heritage, supporting elders, inspiring young people and strengthening local community. Event information, sponsorship opportunities and trader applications are organised around action.",
+    highlights: [
+      { value: "30 Aug", label: "Bangla Community Day 2026" },
+      { value: "3,000+", label: "Expected visitors" },
+      { value: "40+", label: "Traders and exhibitors" },
+    ],
     theme: "community",
     visualTitle: "SS",
-    visualEyebrow: "PEOPLE / CULTURE / CONNECTION",
-    visualMetric: "ONE",
-    visualCaption: "SHONGO SHOMITHI / COMMUNITY",
+    visualEyebrow: "HERITAGE / FAMILY / COMMUNITY",
+    visualMetric: "3K+",
+    visualCaption: "WALSALL / BANGLA COMMUNITY DAY 2026",
   },
 ];
 
