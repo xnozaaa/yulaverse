@@ -14,7 +14,8 @@ type LogoProps = {
     | "tagline-horizontal"
     | "tagline-horizontal-light-bg"
     | "tagline-condensed"
-    | "tagline-condensed-light-bg";
+    | "tagline-condensed-light-bg"
+    | "tagline-only";
   className?: string;
   priority?: boolean;
 };
@@ -97,6 +98,12 @@ const logos = {
     width: 7680,
     height: 5336,
     alt: "Yulaverse Studio — Brand Identity, Web Design, Creative Direction",
+  },
+  "tagline-only": {
+    src: "/brand/official-tagline-only.png",
+    width: 7680,
+    height: 5335,
+    alt: "Brand Identity, Web Design, Creative Direction",
   },
 } as const;
 

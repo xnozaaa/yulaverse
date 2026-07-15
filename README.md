@@ -59,6 +59,10 @@ The complete official 4x logo set supplied by Yulaverse Studio is preserved exac
 - `official-tagline-horizontal-light-bg.png`
 - `official-tagline-condensed.png`
 - `official-tagline-condensed-light-bg.png`
+- `official-tagline-only.png`
+- `official-colour-palette.png`
+
+The official palette is `#0C0F15`, `#C5A576`, `#F2F2F2` and `#5946D1`.
 
 ## Production notes
 

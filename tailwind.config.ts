@@ -8,10 +8,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0D12",
-        ivory: "#F4F0E8",
-        indigo: "#6254D9",
-        gold: "#C6A66B",
+        ink: "#0C0F15",
+        ivory: "#F2F2F2",
+        indigo: "#5946D1",
+        gold: "#C5A576",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "sans-serif"],

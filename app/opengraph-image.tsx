@@ -13,8 +13,8 @@ export default function OpenGraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "#0B0D12",
-        color: "#F4F0E8",
+        background: "#0C0F15",
+        color: "#F2F2F2",
         padding: "68px 76px",
         fontFamily: "sans-serif",
       }}
@@ -34,7 +34,7 @@ export default function OpenGraphImage() {
             display: "flex",
             fontSize: 16,
             letterSpacing: "0.18em",
-            color: "#C6A66B",
+            color: "#C5A576",
           }}
         >
           CREATIVE STUDIO / 2026
@@ -58,7 +58,7 @@ export default function OpenGraphImage() {
             display: "flex",
             marginTop: 36,
             fontSize: 21,
-            color: "rgba(244,240,232,.65)",
+            color: "rgba(242,242,242,.65)",
           }}
         >
           Distinctive identities and premium websites for ambitious brands.
