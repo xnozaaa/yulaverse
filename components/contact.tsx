@@ -29,9 +29,9 @@ export function Contact() {
               <br />
               <a
                 className="mt-2 inline-block border-b border-gold/60 pb-1 font-semibold text-ivory"
-                href="mailto:hello@yulaverse.studio"
+                href="mailto:yulaversestudio@gmail.com"
               >
-                hello@yulaverse.studio
+                yulaversestudio@gmail.com
               </a>
             </p>
           </div>

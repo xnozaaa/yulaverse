@@ -81,7 +81,7 @@ export function ContactForm() {
       setStatus({
         type: "error",
         message:
-          "We could not connect to the studio. Please email hello@yulaverse.studio.",
+          "We could not connect to the studio. Please email yulaversestudio@gmail.com.",
       });
     }
   }

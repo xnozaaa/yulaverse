@@ -18,10 +18,10 @@ export function Footer() {
           <div className="md:col-span-5">
             <Logo variant="light" className="h-auto w-64 max-w-full" />
             <a
-              href="mailto:hello@yulaverse.studio"
+              href="mailto:yulaversestudio@gmail.com"
               className="mt-8 inline-flex items-center gap-3 border-b border-ivory/35 pb-2 text-xl font-bold"
             >
-              hello@yulaverse.studio
+              yulaversestudio@gmail.com
               <ArrowUpRight className="size-5" />
             </a>
           </div>

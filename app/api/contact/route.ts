@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       ok: true,
       delivered: false,
       message:
-        "Your enquiry is valid, but online delivery is not configured yet. Please email hello@yulaverse.studio.",
+        "Your enquiry is valid, but online delivery is not configured yet. Please email yulaversestudio@gmail.com.",
     });
   }
 
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         message:
-          "We could not deliver your enquiry right now. Please email hello@yulaverse.studio.",
+          "We could not deliver your enquiry right now. Please email yulaversestudio@gmail.com.",
       },
       { status: 502 },
     );

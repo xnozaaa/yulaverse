@@ -30,7 +30,7 @@ Copy `.env.example` to `.env.local` and set:
 CONTACT_WEBHOOK_URL=https://your-secure-endpoint.example/enquiries
 ```
 
-The endpoint must accept a JSON `POST`. Keep provider credentials and spam/rate-limiting logic in that secure endpoint. When the variable is absent, the interface tells the visitor to email `hello@yulaverse.studio` instead.
+The endpoint must accept a JSON `POST`. Keep provider credentials and spam/rate-limiting logic in that secure endpoint. When the variable is absent, the interface tells the visitor to email `yulaversestudio@gmail.com` instead.
 
 ## Content
 
