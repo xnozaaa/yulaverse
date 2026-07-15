@@ -22,15 +22,11 @@ npm run build
 
 ## Enquiry delivery
 
-The enquiry form performs client-side and server-side validation. By design, it does **not** claim an enquiry was delivered unless a provider is configured.
+The enquiry form validates submissions in the browser and again on the server, filters simple bot submissions with a honeypot field, and then emails the complete brief to `yulaversestudio@gmail.com` through a server-side FormSubmit endpoint. The delivery request runs on the server rather than directly from the browser form.
 
-Copy `.env.example` to `.env.local` and set:
+FormSubmit requires the recipient to approve a one-time activation email before the first enquiry can be delivered. If the delivery service is unavailable or still awaiting confirmation, the form clearly asks the visitor to email the studio directly instead of reporting a false success.
 
-```bash
-CONTACT_WEBHOOK_URL=https://your-secure-endpoint.example/enquiries
-```
-
-The endpoint must accept a JSON `POST`. Keep provider credentials and spam/rate-limiting logic in that secure endpoint. When the variable is absent, the interface tells the visitor to email `yulaversestudio@gmail.com` instead.
+`CONTACT_DELIVERY_URL` is optional and should only be set when replacing the default endpoint with another compatible `application/x-www-form-urlencoded` delivery service.
 
 ## Content
 

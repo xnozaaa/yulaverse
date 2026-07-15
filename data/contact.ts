@@ -21,6 +21,7 @@ export type ContactPayload = {
   budget: string;
   launchDate: string;
   details: string;
+  website: string;
 };
 
 export type ContactErrors = Partial<Record<keyof ContactPayload, string>>;

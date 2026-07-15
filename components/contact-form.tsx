@@ -18,6 +18,7 @@ const initialPayload: ContactPayload = {
   budget: "",
   launchDate: "",
   details: "",
+  website: "",
 };
 
 type Status = {
@@ -95,6 +96,17 @@ export function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      <label className="sr-only" htmlFor="website" aria-hidden="true">
+        Website
+        <input
+          id="website"
+          name="website"
+          autoComplete="off"
+          tabIndex={-1}
+          value={values.website}
+          onChange={(event) => update("website", event.target.value)}
+        />
+      </label>
       <div className="form-grid">
         <label className="field-group" htmlFor="name">
           <span>Name</span>
