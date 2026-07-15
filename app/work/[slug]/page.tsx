@@ -68,7 +68,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </div>
 
             <div className="mt-14 md:mt-20">
-              <CaseStudyVisual study={study} />
+              <CaseStudyVisual priority study={study} />
             </div>
 
             <div className="mt-8 grid gap-5 border-y border-ink/20 py-6 text-xs font-semibold uppercase tracking-[0.15em] sm:grid-cols-2 lg:grid-cols-4">

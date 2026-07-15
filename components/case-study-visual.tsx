@@ -1,73 +1,87 @@
+import Image from "next/image";
 import type { CaseStudy } from "@/data/case-studies";
 
 export function CaseStudyVisual({
   study,
   compact = false,
+  priority = false,
 }: {
   study: CaseStudy;
   compact?: boolean;
+  priority?: boolean;
 }) {
   return (
     <div
       className={`case-visual case-visual--${study.theme} ${compact ? "case-visual--compact" : ""}`}
-      aria-label={`Abstract identity and interface composition for ${study.name}`}
+      aria-label={`Branded website composition for ${study.name}`}
       role="img"
     >
-      {study.theme === "ember" && (
-        <>
-          <div className="ember-word">{study.visualTitle}</div>
-          <div className="ember-circle" />
-          <div className="ember-card">
-            <span>{study.visualEyebrow}</span>
-            <strong>{study.visualMetric}</strong>
-          </div>
-          <div className="ember-caption">{study.visualCaption}</div>
-        </>
-      )}
+      <div className="project-preview__atmosphere" />
 
-      {study.theme === "signal" && (
-        <>
-          <div className="signal-grid" />
-          <div className="signal-arc" />
-          <div className="signal-title">{study.visualTitle}</div>
-          <div className="signal-panel">
-            <span>{study.visualEyebrow}</span>
-            <strong>{study.visualMetric}</strong>
+      <div className="project-preview">
+        <div className="project-preview__chrome">
+          <span className="project-preview__dots" aria-hidden="true">
             <i />
-          </div>
-          <div className="signal-mark">{study.visualCaption}</div>
-        </>
-      )}
-
-      {study.theme === "paper" && (
-        <>
-          <div className="paper-type">{study.visualTitle}</div>
-          <div className="paper-object">
-            <span />
             <i />
-          </div>
-          <div className="paper-copy">
-            <span>{study.visualEyebrow}</span>
-            <strong>{study.visualMetric}</strong>
-          </div>
-          <div className="paper-rule" />
-          <div className="paper-caption">{study.visualCaption}</div>
-        </>
-      )}
+            <i />
+          </span>
+          <span className="project-preview__host">{study.visualHost}</span>
+          <span className="project-preview__status">Live site ↗</span>
+        </div>
 
-      {study.theme === "community" && (
-        <>
-          <div className="community-grid" />
-          <div className="community-orbit community-orbit--outer" />
-          <div className="community-orbit community-orbit--inner" />
-          <div className="community-title">{study.visualTitle}</div>
-          <div className="community-copy">
-            <span>{study.visualEyebrow}</span>
-            <strong>{study.visualMetric}</strong>
+        <div className="project-preview__screen">
+          <Image
+            alt=""
+            className="project-preview__media"
+            fill
+            priority={priority}
+            sizes="(max-width: 767px) 92vw, 84vw"
+            src={study.visualImage}
+          />
+          <div className="project-preview__shade" />
+
+          <div className="project-preview__nav">
+            {study.visualLogo ? (
+              <span className="project-preview__logo">
+                <Image
+                  alt=""
+                  fill
+                  sizes="(max-width: 767px) 130px, 220px"
+                  src={study.visualLogo}
+                />
+              </span>
+            ) : (
+              <span className="project-preview__wordmark">
+                APP<span>CARZ</span>
+              </span>
+            )}
+            <span className="project-preview__menu" aria-hidden="true">
+              <i />
+              <i />
+            </span>
           </div>
-          <div className="community-caption">{study.visualCaption}</div>
-        </>
-      )}
+
+          <div className="project-preview__copy">
+            <span className="project-preview__eyebrow">
+              {study.visualEyebrow}
+            </span>
+            <strong>{study.visualTitle}</strong>
+            <span className="project-preview__action">
+              {study.visualAction} <b>↗</b>
+            </span>
+          </div>
+
+          <div className="project-preview__metric">
+            <strong>{study.visualMetric}</strong>
+            <span>{study.visualCaption}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="project-preview__footer">
+        <span>Project website</span>
+        <strong>{study.visualHost}</strong>
+      </div>
     </div>
   );
 }

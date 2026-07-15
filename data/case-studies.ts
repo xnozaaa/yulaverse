@@ -9,6 +9,10 @@ export type CaseStudy = {
   direction: string;
   highlights: Array<{ value: string; label: string }>;
   theme: "ember" | "signal" | "paper" | "community";
+  visualImage: string;
+  visualLogo?: string;
+  visualHost: string;
+  visualAction: string;
   visualTitle: string;
   visualEyebrow: string;
   visualMetric: string;
@@ -33,10 +37,13 @@ export const caseStudies: CaseStudy[] = [
       { value: "Fixed", label: "Airport fares" },
     ],
     theme: "ember",
-    visualTitle: "APP",
-    visualEyebrow: "PRIVATE HIRE / AIRPORT / EVENTS",
+    visualImage: "/projects/brand/appcarz-hero.png",
+    visualHost: "appcarz.co.uk",
+    visualAction: "Book a journey",
+    visualTitle: "BOOK. RIDE. ARRIVE.",
+    visualEyebrow: "PRIVATE HIRE / AIRPORT TRANSFERS",
     visualMetric: "24/7",
-    visualCaption: "WEST MIDLANDS / FIXED AIRPORT FARES",
+    visualCaption: "WEST MIDLANDS / FIXED FARES",
   },
   {
     slug: "a1-walsall-radio",
@@ -55,10 +62,14 @@ export const caseStudies: CaseStudy[] = [
       { value: "40+", label: "Years of trusted transport" },
     ],
     theme: "signal",
-    visualTitle: "A1",
+    visualImage: "/projects/brand/a1-hero.png",
+    visualLogo: "/projects/brand/a1-logo.png",
+    visualHost: "walsallradiotaxis.com",
+    visualAction: "Book your taxi",
+    visualTitle: "TRUSTED SINCE 1986.",
     visualEyebrow: "SCHOOLS / BUSINESS / ACCESS",
     visualMetric: "1986",
-    visualCaption: "WALSALL / TRUSTED LOCAL TRANSPORT",
+    visualCaption: "WALSALL / LOCAL TRANSPORT",
   },
   {
     slug: "tutoring-for-the-deaf",
@@ -77,10 +88,14 @@ export const caseStudies: CaseStudy[] = [
       { value: "GCSE", label: "English and maths support" },
     ],
     theme: "paper",
-    visualTitle: "LEARN",
-    visualEyebrow: "BSL / 1:1 / GCSE",
-    visualMetric: "10+",
-    visualCaption: "ENGLISH + MATHS / VISUAL LEARNING",
+    visualImage: "/projects/brand/tutoring-icon.png",
+    visualLogo: "/projects/brand/tutoring-logo.png",
+    visualHost: "tutoringforthedeaf.co.uk",
+    visualAction: "Free consultation",
+    visualTitle: "LEARN YOUR WAY.",
+    visualEyebrow: "BSL-SUPPORTED / ENGLISH + MATHS",
+    visualMetric: "1:1",
+    visualCaption: "ACCESSIBLE / VISUAL / PERSONALISED",
   },
   {
     slug: "shongo-shomithi",
@@ -99,10 +114,14 @@ export const caseStudies: CaseStudy[] = [
       { value: "40+", label: "Traders and exhibitors" },
     ],
     theme: "community",
-    visualTitle: "SS",
+    visualImage: "/projects/brand/shongo-hero.webp",
+    visualLogo: "/projects/brand/shongo-logo.webp",
+    visualHost: "shongoshomithi.co.uk",
+    visualAction: "Join the community",
+    visualTitle: "UNITED BY HERITAGE.",
     visualEyebrow: "HERITAGE / FAMILY / COMMUNITY",
-    visualMetric: "3K+",
-    visualCaption: "WALSALL / BANGLA COMMUNITY DAY 2026",
+    visualMetric: "30 AUG",
+    visualCaption: "WALSALL / COMMUNITY DAY 2026",
   },
 ];
 
