@@ -22,7 +22,7 @@ npm run build
 
 ## Enquiry delivery
 
-The enquiry form validates submissions in the browser and again through `/api/contact`, filters simple bot submissions with a honeypot field, and then emails the complete brief to `yulaversestudio@gmail.com` through FormSubmit's supported AJAX delivery flow. No email password or API key is placed in the site.
+The enquiry form validates submissions in the browser and again through `/api/contact`, filters simple bot submissions with a honeypot field, and then emails the complete brief to `yulaversestudio@gmail.com` through FormSubmit's supported AJAX delivery flow. The activated delivery token keeps the recipient address out of the form endpoint, and no email password or API key is placed in the site.
 
 The recipient has completed FormSubmit's required one-time activation. If the delivery service is unavailable, the form clearly asks the visitor to email the studio directly instead of reporting a false success.
 

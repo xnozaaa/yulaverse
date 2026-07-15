@@ -10,7 +10,8 @@ import {
 } from "@/data/contact";
 import { ArrowUpRight } from "./icons";
 
-const deliveryUrl = "https://formsubmit.co/ajax/yulaversestudio@gmail.com";
+const deliveryUrl =
+  "https://formsubmit.co/ajax/3b7d189230ece0b4d8a060f6a7b79071";
 
 const initialPayload: ContactPayload = {
   name: "",
