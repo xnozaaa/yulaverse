@@ -10,6 +10,8 @@ import {
 } from "@/data/contact";
 import { ArrowUpRight } from "./icons";
 
+const deliveryUrl = "https://formsubmit.co/ajax/yulaversestudio@gmail.com";
+
 const initialPayload: ContactPayload = {
   name: "",
   email: "",
@@ -25,6 +27,50 @@ type Status = {
   type: "idle" | "loading" | "success" | "error";
   message?: string;
 };
+
+function createDeliveryBody(payload: ContactPayload) {
+  const subjectBusiness = payload.businessName
+    .replace(/[\r\n]+/g, " ")
+    .slice(0, 120);
+
+  return new URLSearchParams({
+    Name: payload.name,
+    Email: payload.email,
+    "Business name": payload.businessName,
+    "Service required": payload.service,
+    "Estimated budget": payload.budget,
+    "Desired launch date": payload.launchDate,
+    "Project details": payload.details,
+    Source: "Yulaverse Studio website",
+    "Submitted at": new Date().toISOString(),
+    _replyto: payload.email,
+    _subject: `New Yulaverse enquiry — ${subjectBusiness}`,
+    _template: "table",
+    _captcha: "false",
+    _honey: "",
+  });
+}
+
+async function deliverEnquiry(payload: ContactPayload) {
+  const response = await fetch(deliveryUrl, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/x-www-form-urlencoded",
+    },
+    body: createDeliveryBody(payload),
+  });
+  const result = (await response.json().catch(() => null)) as {
+    success?: boolean | string;
+    message?: string;
+  } | null;
+
+  return {
+    delivered:
+      response.ok && (result?.success === true || result?.success === "true"),
+    message: result?.message,
+  };
+}
 
 export function ContactForm() {
   const [values, setValues] = useState(initialPayload);
@@ -76,8 +122,29 @@ export function ContactForm() {
         return;
       }
 
-      setStatus({ type: "success", message: result.message });
-      if (result.delivered) setValues(initialPayload);
+      if (result.delivered) {
+        setStatus({ type: "success", message: result.message });
+        setValues(initialPayload);
+        return;
+      }
+
+      setStatus({ type: "loading", message: "Sending your project brief…" });
+      const delivery = await deliverEnquiry(values);
+      if (!delivery.delivered) {
+        setStatus({
+          type: "error",
+          message:
+            delivery.message ??
+            "We could not deliver your enquiry. Please email yulaversestudio@gmail.com.",
+        });
+        return;
+      }
+
+      setStatus({
+        type: "success",
+        message: "Thank you. Your enquiry has been emailed to the studio.",
+      });
+      setValues(initialPayload);
     } catch {
       setStatus({
         type: "error",

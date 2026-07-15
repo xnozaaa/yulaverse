@@ -22,11 +22,9 @@ npm run build
 
 ## Enquiry delivery
 
-The enquiry form validates submissions in the browser and again on the server, filters simple bot submissions with a honeypot field, and then emails the complete brief to `yulaversestudio@gmail.com` through a server-side FormSubmit endpoint. The delivery request runs on the server rather than directly from the browser form.
+The enquiry form validates submissions in the browser and again through `/api/contact`, filters simple bot submissions with a honeypot field, and then emails the complete brief to `yulaversestudio@gmail.com` through FormSubmit's supported AJAX delivery flow. No email password or API key is placed in the site.
 
-FormSubmit requires the recipient to approve a one-time activation email before the first enquiry can be delivered. If the delivery service is unavailable or still awaiting confirmation, the form clearly asks the visitor to email the studio directly instead of reporting a false success.
-
-`CONTACT_DELIVERY_URL` is optional and should only be set when replacing the default endpoint with another compatible `application/x-www-form-urlencoded` delivery service.
+The recipient has completed FormSubmit's required one-time activation. If the delivery service is unavailable, the form clearly asks the visitor to email the studio directly instead of reporting a false success.
 
 ## Content
 
