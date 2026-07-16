@@ -54,6 +54,7 @@ const structuredData = {
       url: "https://yulaverse.co.uk/",
       email: "yulaversestudio@gmail.com",
       logo: "https://yulaverse.co.uk/brand/official-monogram-gold.png",
+      sameAs: ["https://www.instagram.com/yulaversestudio/"],
       description:
         "An independent creative studio creating brand identities, premium websites and digital experiences.",
       knowsAbout: [

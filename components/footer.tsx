@@ -24,6 +24,18 @@ export function Footer() {
               yulaversestudio@gmail.com
               <ArrowUpRight className="size-5" />
             </a>
+            <div className="mt-5">
+              <a
+                href="https://www.instagram.com/yulaversestudio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link inline-flex items-center gap-2 border-b border-ivory/20 pb-1 font-semibold"
+                aria-label="Yulaverse Studio on Instagram"
+              >
+                Instagram / @yulaversestudio
+                <ArrowUpRight className="size-4" />
+              </a>
+            </div>
           </div>
 
           <nav
