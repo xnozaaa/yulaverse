@@ -60,5 +60,5 @@ The official palette is `#0C0F15`, `#C5A576`, `#F2F2F2` and `#5946D1`.
 
 ## Production notes
 
-- Update `metadataBase` in `app/layout.tsx` if the final domain changes.
+- The production domain and metadata base are `https://yulaverse.co.uk`.
 - Add rate limiting and bot protection at the deployment edge or webhook provider.

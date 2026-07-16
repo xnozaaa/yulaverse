@@ -9,7 +9,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yulaverse.vercel.app"),
+  metadataBase: new URL("https://yulaverse.co.uk"),
   title: {
     default: "Yulaverse Studio — Brand identities & premium websites",
     template: "%s — Yulaverse Studio",
