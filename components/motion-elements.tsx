@@ -8,31 +8,6 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useEffect, type MouseEvent, type ReactNode } from "react";
-import { Logo } from "./logo";
-
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      className={className}
-      initial={false}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 export function MagneticLink({
   href,
@@ -70,19 +45,6 @@ export function MagneticLink({
         {children}
       </Link>
     </motion.div>
-  );
-}
-
-export function BrandLoader() {
-  return (
-    <div
-      aria-hidden="true"
-      className="brand-loader fixed inset-0 z-[100] grid place-items-center bg-ink"
-    >
-      <div className="brand-loader-mark">
-        <Logo variant="monogram-light" className="h-auto w-32" priority />
-      </div>
-    </div>
   );
 }
 

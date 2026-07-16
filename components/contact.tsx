@@ -1,5 +1,5 @@
 import { ContactForm } from "./contact-form";
-import { Reveal } from "./motion-elements";
+import { Reveal } from "./reveal";
 
 export function Contact() {
   return (

@@ -163,18 +163,22 @@ export function ContactForm() {
     ) : null;
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      <label className="sr-only" htmlFor="website" aria-hidden="true">
-        Website
-        <input
-          id="website"
-          name="website"
-          autoComplete="off"
-          tabIndex={-1}
-          value={values.website}
-          onChange={(event) => update("website", event.target.value)}
-        />
-      </label>
+    <form
+      className="contact-form"
+      onSubmit={handleSubmit}
+      aria-busy={status.type === "loading"}
+      noValidate
+    >
+      <input
+        name="website"
+        type="text"
+        autoComplete="off"
+        aria-hidden="true"
+        hidden
+        tabIndex={-1}
+        value={values.website}
+        onChange={(event) => update("website", event.target.value)}
+      />
       <div className="form-grid">
         <label className="field-group" htmlFor="name">
           <span>Name</span>
@@ -314,18 +318,23 @@ export function ContactForm() {
             : "Send project enquiry"}
           <ArrowUpRight className="size-5" />
         </button>
-        <div
-          className={`min-h-6 max-w-md text-sm leading-6 ${
-            status.type === "error"
-              ? "text-[#ffd0c8]"
-              : status.type === "success"
-                ? "text-ivory"
-                : "text-ivory/55"
-          }`}
-          role="status"
-          aria-live="polite"
-        >
-          {status.message}
+        <div className="max-w-md text-sm leading-6">
+          <div
+            className={`min-h-6 ${
+              status.type === "error"
+                ? "text-[#ffd0c8]"
+                : status.type === "success"
+                  ? "text-ivory"
+                  : "text-ivory/55"
+            }`}
+            role="status"
+            aria-live="polite"
+          >
+            {status.message}
+          </div>
+          <p className="mt-1 text-xs leading-5 text-ivory/40">
+            Your details are used only to respond to this enquiry.
+          </p>
         </div>
       </div>
     </form>

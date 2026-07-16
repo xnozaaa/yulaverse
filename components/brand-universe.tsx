@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { Logo } from "./logo";
 
 const universeServices = [
@@ -34,7 +34,31 @@ const universeServices = [
 
 export function BrandUniverse() {
   const [active, setActive] = useState(0);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const reduceMotion = useReducedMotion();
+
+  function handleTabKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) {
+    let nextIndex: number | undefined;
+
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = (index + 1) % universeServices.length;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex =
+        (index - 1 + universeServices.length) % universeServices.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = universeServices.length - 1;
+    }
+
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    setActive(nextIndex);
+    tabRefs.current[nextIndex]?.focus();
+  }
 
   return (
     <section className="section-pad overflow-hidden bg-ivory text-ink">
@@ -72,13 +96,18 @@ export function BrandUniverse() {
             {universeServices.map((service, index) => (
               <button
                 key={service.name}
+                ref={(element) => {
+                  tabRefs.current[index] = element;
+                }}
                 type="button"
                 role="tab"
                 id={`universe-tab-${index}`}
                 aria-selected={active === index}
                 aria-controls="universe-panel"
+                tabIndex={active === index ? 0 : -1}
                 className={`universe-node universe-node--${index + 1} ${active === index ? "is-active" : ""}`}
                 onClick={() => setActive(index)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
               >
                 <span className="universe-node-index">0{index + 1}</span>
                 {service.name}

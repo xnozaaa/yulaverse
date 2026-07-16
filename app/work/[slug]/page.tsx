@@ -21,9 +21,13 @@ export async function generateMetadata({
   return {
     title: `${study.name} — Selected project`,
     description: study.summary,
+    alternates: {
+      canonical: `/work/${study.slug}`,
+    },
     openGraph: {
       title: `${study.name} — Yulaverse Studio project`,
       description: study.summary,
+      url: `/work/${study.slug}`,
     },
   };
 }
@@ -38,7 +42,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   return (
     <>
       <Navigation forceSolid />
-      <main id="top" className="bg-ivory text-ink">
+      <main id="main-content" className="bg-ivory text-ink" tabIndex={-1}>
         <section className="pb-16 pt-36 sm:pt-44 md:pb-24">
           <div className="site-shell">
             <Link
@@ -59,7 +63,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <a
                   href={study.website}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="mt-8 inline-flex items-center gap-2 border-b border-indigo/40 pb-2 text-sm font-bold text-indigo"
                 >
                   Visit live project <ArrowUpRight className="size-4" />
@@ -89,7 +93,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <a
                   href={study.website}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 border-b border-ink/25"
                 >
                   View live <ArrowUpRight className="size-3" />

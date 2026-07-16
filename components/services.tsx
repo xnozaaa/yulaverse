@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "./icons";
-import { Reveal } from "./motion-elements";
+import { Reveal } from "./reveal";
 
 const services = [
   {
@@ -45,11 +45,10 @@ export function Services() {
         </div>
 
         <div className="mt-20 grid border-l border-t border-ivory/15 md:mt-28 md:grid-cols-3">
-          {services.map((service, index) => (
-            <Reveal delay={index * 0.08} key={service.number}>
+          {services.map((service) => (
+            <Reveal key={service.number}>
               <article
                 className={`service-card ${service.accent} group flex min-h-[430px] flex-col border-b border-r border-ivory/15 p-6 outline-none sm:p-8`}
-                tabIndex={0}
               >
                 <div className="service-card-grid" aria-hidden="true" />
                 <div className="service-card-orbit" aria-hidden="true" />
@@ -57,7 +56,7 @@ export function Services() {
                   <span className="text-xs font-bold tracking-[0.2em] text-gold">
                     {service.number}
                   </span>
-                  <ArrowUpRight className="size-6 transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 group-focus:-translate-y-1 group-focus:translate-x-1" />
+                  <ArrowUpRight className="size-6 transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1" />
                 </div>
                 <div className="relative z-10 mt-auto">
                   <h3 className="max-w-xs text-4xl font-extrabold tracking-[-0.055em] sm:text-5xl">

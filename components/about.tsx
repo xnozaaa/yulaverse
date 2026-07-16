@@ -1,5 +1,5 @@
 import { Logo } from "./logo";
-import { Reveal } from "./motion-elements";
+import { Reveal } from "./reveal";
 
 const studioPrinciples = [
   {

@@ -44,7 +44,7 @@ export function Footer() {
 
           <div className="flex items-start justify-end md:col-span-2 md:col-start-11">
             <a
-              href="#top"
+              href="#main-content"
               className="footer-orbit group grid size-28 place-items-center rounded-full border border-ivory/20"
               aria-label="Back to top"
             >

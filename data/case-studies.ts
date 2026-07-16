@@ -79,7 +79,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["Accessible web design", "Content strategy", "Consultation UX"],
     website: "https://tutoringforthedeaf.co.uk",
     summary:
-      "An accessible online tutoring platform for secondary-age deaf and hearing-impaired learners seeking personalised English, maths and GCSE support.",
+      "An accessible online tutoring platform for secondary-school-age deaf and hard-of-hearing learners seeking personalised English, maths and GCSE support.",
     direction:
       "The journey explains who the service supports, how communication is adapted and what families can expect from a consultation through to regular 1:1 lessons. BSL-supported teaching, visual explanations, EHCP awareness, safeguarding and parent updates are presented as core parts of the offer rather than secondary details.",
     highlights: [

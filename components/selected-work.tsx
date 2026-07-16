@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
 import { ArrowUpRight } from "./icons";
-import { Reveal } from "./motion-elements";
+import { Reveal } from "./reveal";
 import { CaseStudyVisual } from "./case-study-visual";
 
 export function SelectedWork() {
