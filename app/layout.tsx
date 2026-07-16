@@ -38,9 +38,41 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Yulaverse Studio",
+    statusBarStyle: "black-translucent",
+  },
   icons: {
-    icon: "/brand/official-monogram-gold.png",
-    apple: "/brand/official-monogram-gold.png",
+    icon: [
+      {
+        url: "/icons/yulaverse-light-32.png",
+        type: "image/png",
+        sizes: "32x32",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icons/yulaverse-dark-32.png",
+        type: "image/png",
+        sizes: "32x32",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [
+      {
+        url: "/icons/yulaverse-light-180.png",
+        type: "image/png",
+        sizes: "180x180",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icons/yulaverse-dark-180.png",
+        type: "image/png",
+        sizes: "180x180",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
   },
 };
 
@@ -76,8 +108,11 @@ const structuredData = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "dark light",
-  themeColor: "#0C0F15",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F2F2F2" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C0F15" },
+  ],
 };
 
 export default function RootLayout({
