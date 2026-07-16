@@ -28,7 +28,7 @@ export function Hero() {
               {...reveal}
               transition={{ duration: 0.7, delay: 0.15 }}
             >
-              Independent creative studio / London · Worldwide
+              Independent creative studio / Working worldwide
             </motion.p>
             <h1
               className="hero-heading"
