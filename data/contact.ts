@@ -30,10 +30,14 @@ export function validateContact(payload: ContactPayload): ContactErrors {
   const errors: ContactErrors = {};
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (payload.name.trim().length < 2) errors.name = "Enter your name.";
-  if (!emailPattern.test(payload.email))
+  if (payload.name.trim().length < 2 || payload.name.length > 120)
+    errors.name = "Enter your name.";
+  if (!emailPattern.test(payload.email) || payload.email.length > 254)
     errors.email = "Enter a valid email address.";
-  if (payload.businessName.trim().length < 2)
+  if (
+    payload.businessName.trim().length < 2 ||
+    payload.businessName.length > 160
+  )
     errors.businessName = "Enter your business name.";
   if (
     !serviceOptions.includes(payload.service as (typeof serviceOptions)[number])
@@ -41,7 +45,8 @@ export function validateContact(payload: ContactPayload): ContactErrors {
     errors.service = "Choose a service.";
   if (!budgetOptions.includes(payload.budget as (typeof budgetOptions)[number]))
     errors.budget = "Choose an estimated budget.";
-  if (!payload.launchDate) errors.launchDate = "Choose a desired launch date.";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.launchDate))
+    errors.launchDate = "Choose a valid desired launch date.";
   if (payload.details.trim().length < 30)
     errors.details = "Tell us a little more (at least 30 characters).";
   if (payload.details.length > 3000)
