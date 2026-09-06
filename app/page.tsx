@@ -1,29 +1,20 @@
-import { About } from "@/components/about";
-import { BrandUniverse } from "@/components/brand-universe";
-import { Contact } from "@/components/contact";
-import { Footer } from "@/components/footer";
-import { Hero } from "@/components/hero";
-import { CursorHalo } from "@/components/motion-elements";
-import { Navigation } from "@/components/navigation";
-import { Process } from "@/components/process";
-import { SelectedWork } from "@/components/selected-work";
-import { Services } from "@/components/services";
+import type { Metadata, Viewport } from "next";
+import { UniverseConcept } from "@/components/concept/universe-concept";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Yulaverse Studio — Brand identity & digital experiences",
+  },
+  description:
+    "An independent creative studio building distinctive brand identities, premium websites and extraordinary digital experiences for ambitious businesses.",
+  alternates: { canonical: "/" },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#09090d",
+};
 
 export default function Home() {
-  return (
-    <>
-      <CursorHalo />
-      <Navigation />
-      <main id="main-content" tabIndex={-1}>
-        <Hero />
-        <SelectedWork />
-        <Services />
-        <BrandUniverse />
-        <Process />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  );
+  return <UniverseConcept />;
 }
