@@ -15,10 +15,25 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run format:check
-npm run lint
 npm run typecheck
 npm run build
 ```
+
+### Browser compatibility
+
+The immersive homepage supports current Edge/Chrome (Chromium), Firefox and Safari (WebKit). WebGL2 provides the metallic 3D sculpture; an animated CSS sculpture remains available when graphics acceleration is disabled, shader compilation fails, or the graphics context is lost. Content is visible before JavaScript loads, and optional scroll reveals never gate access to the page. Both renderers honour the pause control and reduced-motion preference.
+
+Run the production server, then the browser regression suite in another terminal:
+
+```bash
+npx playwright install chromium firefox webkit
+npm run build
+npm run start -- -p 3001
+# In another terminal:
+npm run test:browsers
+```
+
+Set `TEST_BASE_URL` to test another URL. Set `TEST_EDGE_EXECUTABLE_PATH` to include a locally available Microsoft Edge executable. Screenshots are written to a temporary `yulaverse-browser-tests` folder, or to `TEST_OUTPUT_DIR` if supplied. The suite checks actual rendered motion, pause/resume, GPU loss, the GPU-free fallback, reduced motion, scroll content, dialogs and mobile navigation without submitting the enquiry form.
 
 ## Enquiry delivery
 
@@ -29,10 +44,9 @@ The recipient has completed FormSubmit's required one-time activation. If the de
 ## Content
 
 - Case-study content: `data/case-studies.ts`
-- Services and process content: `components/services.tsx` and `components/process.tsx`
-- Studio profile: `components/about.tsx`
+- Immersive homepage, services, process and studio profile: `components/concept/universe-concept.tsx`
 - Contact choices and validation: `data/contact.ts`
-- Email and footer navigation: `components/footer.tsx`
+- Homepage email and footer navigation: `components/concept/universe-concept.tsx`
 
 The portfolio currently features App Carz, A1 Walsall Radio Taxis, Tutoring for the Deaf and Shongo Shomithi. Their shared structure, verified project facts and live-site links live in `data/case-studies.ts`.
 

@@ -7,6 +7,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { caseStudies, type CaseStudy } from "@/data/case-studies";
 import { ContactForm } from "@/components/contact-form";
 import { Logo } from "@/components/logo";
+import { Reveal } from "./reveal";
+import { SceneBoundary, type SceneStatus } from "./scene-boundary";
 import styles from "./universe.module.css";
 
 const OrbitalScene = dynamic(() => import("./orbital-scene"), { ssr: false });
@@ -125,6 +127,7 @@ function ProjectArtwork({
 
 export function UniverseConcept() {
   const [paused, setPaused] = useState(false);
+  const [sceneStatus, setSceneStatus] = useState<SceneStatus>("loading");
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [activeProject, setActiveProject] = useState<CaseStudy | null>(null);
@@ -138,8 +141,12 @@ export function UniverseConcept() {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReduced(preference.matches);
     update();
-    preference.addEventListener("change", update);
-    return () => preference.removeEventListener("change", update);
+    if (preference.addEventListener) {
+      preference.addEventListener("change", update);
+      return () => preference.removeEventListener("change", update);
+    }
+    preference.addListener(update);
+    return () => preference.removeListener(update);
   }, []);
   const { scrollYProgress } = useScroll();
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
@@ -190,13 +197,6 @@ export function UniverseConcept() {
     };
   }, [activeProject, contactOpen, menuOpen]);
 
-  const reveal = {
-    initial: { opacity: 0, y: reduced ? 0 : 35 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.15 },
-    transition: { duration: reduced ? 0 : 0.8 },
-  };
-
   return (
     <div
       className={styles.universe}
@@ -238,12 +238,15 @@ export function UniverseConcept() {
         <div ref={heroTrack} className={styles.heroTrack} id="top">
           <section className={styles.hero} aria-labelledby="hero-title">
             <div className={styles.heroAtmosphere} aria-hidden="true" />
-            <div className={styles.scene}>
-              <OrbitalScene paused={paused} />
+            <div className={styles.scene} data-scene-status={sceneStatus}>
+              <SceneBoundary onStatus={setSceneStatus}>
+                <OrbitalScene paused={paused} onStatus={setSceneStatus} />
+              </SceneBoundary>
               <div className={styles.sceneFallback} aria-hidden="true">
                 <i />
                 <i />
                 <i />
+                <span className={styles.fallbackCore} />
               </div>
             </div>
             <div className={styles.heroGrid} aria-hidden="true" />
@@ -319,7 +322,7 @@ export function UniverseConcept() {
             <span>01 / The studio</span>
             <span>Strategy meets imagination</span>
           </div>
-          <motion.div {...reveal} className={styles.introductionContent}>
+          <Reveal className={styles.introductionContent}>
             <span className={styles.introMark}>
               <Logo variant="monogram-light" />
             </span>
@@ -349,7 +352,7 @@ export function UniverseConcept() {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
         </section>
 
         <section id="work" className={styles.work}>
@@ -357,7 +360,7 @@ export function UniverseConcept() {
             <span>02 / Selected work</span>
             <span>Four brands. Four different worlds.</span>
           </div>
-          <motion.div {...reveal} className={styles.workHeading}>
+          <Reveal className={styles.workHeading}>
             <h2>
               Proof of
               <br />
@@ -368,14 +371,10 @@ export function UniverseConcept() {
               <br />
               Explore the worlds we’ve helped create.
             </p>
-          </motion.div>
+          </Reveal>
           <div className={styles.workGrid}>
             {caseStudies.map((study, index) => (
-              <motion.article
-                {...reveal}
-                className={styles.project}
-                key={study.slug}
-              >
+              <Reveal as="article" className={styles.project} key={study.slug}>
                 <button
                   key="artwork"
                   onClick={() => setActiveProject(study)}
@@ -396,7 +395,7 @@ export function UniverseConcept() {
                     {study.services[0]}
                   </span>
                 </div>
-              </motion.article>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -412,7 +411,7 @@ export function UniverseConcept() {
             <span>One studio. A complete vision.</span>
           </div>
           <div className={styles.expertiseGrid}>
-            <motion.div {...reveal} className={styles.expertiseIntro}>
+            <Reveal className={styles.expertiseIntro}>
               <h2>
                 From first spark
                 <br />
@@ -428,7 +427,7 @@ export function UniverseConcept() {
                 <span />
                 <i>✦</i>
               </div>
-            </motion.div>
+            </Reveal>
             <div className={styles.serviceList}>
               {services.map((service, index) => (
                 <div
@@ -472,18 +471,14 @@ export function UniverseConcept() {
             <span>04 / The process</span>
             <span>Clear thinking. Forward motion.</span>
           </div>
-          <motion.h2 {...reveal}>
+          <Reveal as="h2">
             Big ideas.
             <br />
             <em>Considered execution.</em>
-          </motion.h2>
+          </Reveal>
           <div className={styles.processGrid}>
             {processStages.map(([title, text], index) => (
-              <motion.div
-                {...reveal}
-                key={title}
-                className={styles.processStep}
-              >
+              <Reveal key={title} className={styles.processStep}>
                 <span key="number" className={styles.processNumber}>
                   0{index + 1}
                 </span>
@@ -492,7 +487,7 @@ export function UniverseConcept() {
                 </div>
                 <h3 key="title">{title}</h3>
                 <p key="description">{text}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -507,7 +502,7 @@ export function UniverseConcept() {
             <span>05 / Your next chapter</span>
             <span>Starts with a conversation</span>
           </div>
-          <motion.div {...reveal} className={styles.contactContent}>
+          <Reveal className={styles.contactContent}>
             <p>Have something extraordinary in mind?</p>
             <h2>
               Let’s build
@@ -523,7 +518,7 @@ export function UniverseConcept() {
             <a href="mailto:yulaversestudio@gmail.com" className={styles.email}>
               yulaversestudio@gmail.com
             </a>
-          </motion.div>
+          </Reveal>
         </section>
       </main>
 
