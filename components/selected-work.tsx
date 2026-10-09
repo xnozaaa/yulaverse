@@ -16,7 +16,7 @@ export function SelectedWork() {
             </h2>
             <p className="mt-8 max-w-2xl text-lg leading-8 text-ink/60">
               Selected identity and digital work across mobility, transport,
-              specialist education and community-led organisations.
+              specialist education, hospitality and community-led organisations.
             </p>
           </Reveal>
         </div>

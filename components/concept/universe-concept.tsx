@@ -213,7 +213,8 @@ export function UniverseConcept() {
         </a>
         <nav className={styles.navigation} aria-label="Main navigation">
           <a href="#work">
-            Selected work <sup>04</sup>
+            Selected work{" "}
+            <sup>{String(caseStudies.length).padStart(2, "0")}</sup>
           </a>
           <a href="#studio">The studio</a>
           <a href="#expertise">Expertise</a>
@@ -358,7 +359,7 @@ export function UniverseConcept() {
         <section id="work" className={styles.work}>
           <div className={styles.sectionMeta}>
             <span>02 / Selected work</span>
-            <span>Four brands. Four different worlds.</span>
+            <span>{caseStudies.length} brands. Distinctive worlds.</span>
           </div>
           <Reveal className={styles.workHeading}>
             <h2>

@@ -224,6 +224,14 @@ main:focus {
   background: #01261f;
 }
 
+.case-visual--restaurant {
+  --project-accent: #e3a567;
+  --project-secondary: #f7f2e8;
+  --project-surface: #142832;
+  --project-text: #f7f2e8;
+  background: #17313b;
+}
+
 .project-preview__atmosphere {
   position: absolute;
   inset: 0;
@@ -346,6 +354,17 @@ main:focus {
   z-index: 1;
 }
 
+.case-visual--restaurant .project-preview__shade {
+  background:
+    linear-gradient(90deg, #142832f5 0 25%, #14283288 60%, #14283222),
+    linear-gradient(0deg, #142832aa, transparent 55%);
+}
+
+.case-visual--restaurant .project-preview__copy strong {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
 .case-visual--ember .project-preview__shade {
   background:
     linear-gradient(
@@ -449,6 +468,10 @@ main:focus {
 .project-preview__logo img {
   object-fit: contain;
   object-position: left center;
+}
+
+.case-visual--restaurant .project-preview__logo {
+  width: clamp(4rem, 10vw, 8rem);
 }
 
 .case-visual--signal .project-preview__logo {

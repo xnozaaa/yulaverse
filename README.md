@@ -48,7 +48,7 @@ The recipient has completed FormSubmit's required one-time activation. If the de
 - Contact choices and validation: `data/contact.ts`
 - Homepage email and footer navigation: `components/concept/universe-concept.tsx`
 
-The portfolio currently features App Carz, A1 Walsall Radio Taxis, Tutoring for the Deaf and Shongo Shomithi. Their shared structure, verified project facts and live-site links live in `data/case-studies.ts`.
+The portfolio currently features App Carz, A1 Walsall Radio Taxis, Tutoring for the Deaf, Shongo Shomithi and Streetly Balti. Their shared structure, verified project facts and live-site links live in `data/case-studies.ts`.
 
 ## Brand assets
 

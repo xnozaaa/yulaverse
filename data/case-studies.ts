@@ -8,7 +8,7 @@ export type CaseStudy = {
   summary: string;
   direction: string;
   highlights: Array<{ value: string; label: string }>;
-  theme: "ember" | "signal" | "paper" | "community";
+  theme: "ember" | "signal" | "paper" | "community" | "restaurant";
   visualImage: string;
   visualLogo?: string;
   visualHost: string;
@@ -122,6 +122,32 @@ export const caseStudies: CaseStudy[] = [
     visualEyebrow: "HERITAGE / FAMILY / COMMUNITY",
     visualMetric: "30 AUG",
     visualCaption: "WALSALL / COMMUNITY DAY 2026",
+  },
+  {
+    slug: "streetly-balti",
+    name: "Streetly Balti",
+    label: "Selected Project",
+    industry: "Restaurant & takeaway",
+    services: ["Web design", "Interactive menu", "Owner dashboard"],
+    website: "https://streetlybalti.co.uk",
+    summary:
+      "A restaurant website bringing Streetly Balti’s Sylheti roots, food and family welcome into a distinctive digital experience, with a searchable dine-in menu and clear routes to book a table or order online.",
+    direction:
+      "The experience connects the restaurant’s story with original photographs of Bangladesh, its kitchen and dining room. Guests can explore dishes, browse the gallery and find booking, ordering and location information. A private owner dashboard lets the team update menus, photographs and journal posts, with tools to manage future charity campaigns and meal draws.",
+    highlights: [
+      { value: "Menu", label: "Searchable dine-in dishes" },
+      { value: "CMS", label: "Owner-managed content" },
+      { value: "Online", label: "Booking and ordering links" },
+    ],
+    theme: "restaurant",
+    visualImage: "/projects/brand/streetly-balti-hero.webp",
+    visualLogo: "/projects/brand/streetly-balti-logo.svg",
+    visualHost: "streetlybalti.co.uk",
+    visualAction: "Book a table",
+    visualTitle: "FROM SYLHET TO STREETLY.",
+    visualEyebrow: "A FAMILY TABLE / A WORLD OF FLAVOUR",
+    visualMetric: "SYLHET",
+    visualCaption: "RESTAURANT / TAKEAWAY / STREETLY",
   },
 ];
 
