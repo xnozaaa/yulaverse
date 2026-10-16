@@ -24,3 +24,7 @@
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+/.agentshelf/
+/test-results/
+/playwright-report/
+/output/

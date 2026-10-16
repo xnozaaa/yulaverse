@@ -8,6 +8,7 @@ import { Logo } from "./logo";
 const navigation = [
   { label: "Work", href: "/#work" },
   { label: "Services", href: "/#services" },
+  { label: "AI Visibility", href: "/ai-visibility" },
   { label: "Process", href: "/#process" },
   { label: "About", href: "/#about" },
   { label: "Contact", href: "/#contact" },

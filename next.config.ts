@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  serverExternalPackages: [
+    "@electric-sql/pglite",
+    "pg",
+    "better-auth",
+    "@better-auth/drizzle-adapter",
+  ],
   async redirects() {
     return [
       {

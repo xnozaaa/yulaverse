@@ -31,6 +31,16 @@ const services = [
     text: "A cohesive creative language across your campaigns, content and customer touchpoints. Consistent by design.",
     tags: ["Art direction", "Content systems", "Launch campaigns"],
   },
+  {
+    title: "AI visibility",
+    line: "Be understood. Get discovered.",
+    text: "Yulaverse Intelligence brings evidence-led website audits, controlled AI recommendation tests and AgentShelf monitoring to your next chapter.",
+    tags: [
+      "AI visibility audits",
+      "Commerce intelligence",
+      "AgentShelf monitoring",
+    ],
+  },
 ];
 const processStages = [
   [
@@ -218,6 +228,7 @@ export function UniverseConcept() {
           </a>
           <a href="#studio">The studio</a>
           <a href="#expertise">Expertise</a>
+          <a href="/ai-visibility">AI Visibility</a>
         </nav>
         <button
           className={styles.headerCta}
@@ -455,6 +466,13 @@ export function UniverseConcept() {
                   >
                     <h4>{service.line}</h4>
                     <p>{service.text}</p>
+                    {service.title === "AI visibility" && (
+                      <p>
+                        <a href="/ai-visibility">
+                          Explore Yulaverse Intelligence ↗
+                        </a>
+                      </p>
+                    )}
                     <div className={styles.tags}>
                       {service.tags.map((tag) => (
                         <span key={tag}>{tag}</span>
@@ -644,10 +662,15 @@ export function UniverseConcept() {
             ["Selected work", "work"],
             ["The studio", "studio"],
             ["Expertise", "expertise"],
+            ["AI Visibility", "/ai-visibility"],
             ["Our process", "process"],
             ["Let’s talk", "contact"],
           ].map(([title, id], i) => (
-            <a href={`#${id}`} key={id} onClick={() => setMenuOpen(false)}>
+            <a
+              href={id.startsWith("/") ? id : `#${id}`}
+              key={id}
+              onClick={() => setMenuOpen(false)}
+            >
               <span>0{i + 1}</span>
               {title}
               <Arrow />
