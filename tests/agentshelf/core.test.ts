@@ -208,6 +208,11 @@ describe("Product feeds", () => {
     expect(
       validateFeed('title,price\n=HYPERLINK("x"),50').proposedCsv,
     ).toContain("'=HYPERLINK"));
+  it("neutralises formulas hidden after leading whitespace", () => {
+    expect(validateFeed("title,price\n  =1+1,50").proposedCsv).toContain(
+      "'=1+1",
+    );
+  });
   it("checks real GTIN check digits", () => {
     expect(validGtin("4006381333931")).toBe(true);
     expect(validGtin("4006381333932")).toBe(false);
@@ -236,6 +241,19 @@ describe("Entitlements and reports", () => {
         livemode: false,
       }),
     ).toBe(true);
+  });
+  it("ends access at a scheduled cancellation even before its final webhook", () => {
+    const s = {
+      stripeId: "sub_scheduled",
+      customerId: "c",
+      status: "active",
+      currentPeriodEnd: "2099-01-01",
+      cancelAtPeriodEnd: false,
+      cancelAt: "2026-11-17T00:00:00.000Z",
+      livemode: false,
+    };
+    expect(hasMonitoring(s, Date.parse("2026-11-16T00:00:00Z"))).toBe(true);
+    expect(hasMonitoring(s, Date.parse("2026-11-17T00:00:00Z"))).toBe(false);
   });
   it("prepares source/methodology and limitations", () => {
     const sections = reportSections(demoSnapshot);

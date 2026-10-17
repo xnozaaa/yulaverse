@@ -1,12 +1,12 @@
 # AgentShelf verification and release status
 
-Date: 16 October 2026. Baseline studio commit: `5dbdcab`.
+Updated: 17 October 2026. Baseline studio commit: `5dbdcab`.
 Repository: `xnozaaa/yulaverse`; implementation branch: `codex/agentshelf`.
 
 ## Verified locally
 
 - TypeScript type checking passed.
-- 76 unit/integration tests across five files passed. These exercise real PGlite
+- 80 unit/integration tests across five files passed. These exercise real PGlite
   PostgreSQL, verified Better Auth accounts, tenant CRUD and database RLS,
   optimistic versions, durable enquiries/outbox, origin/consent checks, atomic
   audit deduplication and report approval, report isolation, retention, robots
@@ -24,14 +24,48 @@ Repository: `xnozaaa/yulaverse`; implementation branch: `codex/agentshelf`.
   Stripe state. This used local fixture accounts and did not send real emails.
 - The 13-page selectable-text A4 sample PDF was generated and all pages inspected
   after raster rendering. Every page is marked simulated. It is not PDF/UA tagged.
-- Production `next build` passed. The existing repository has no configured ESLint
-  installation, so Next prints a lint-setup warning; no lint pass is claimed.
-  Type checking and the automated test suite run separately and pass.
+- Production `next build`, TypeScript checking and ESLint passed. Lint now runs
+  in CI. Next 15's `next lint` command is deprecated and its compatible ESLint 9
+  line reports end of support; a coordinated toolchain upgrade remains necessary.
 - `npm audit --omit=dev`: **0 production dependency vulnerabilities** at the time
   checked. A full audit still reports advisories in the existing Tailwind 3 build
   dependency chain. A forced Tailwind 4 migration was deliberately not mixed into
   this product implementation. Recheck before release; no untrusted CSS/glob
   patterns should enter the build.
+
+## Real hosted-service verification, 17 October
+
+- Provisioned Neon Free in London and applied the additive 13-table schema to the
+  verified empty database. Preview and Development only; no production database
+  or existing studio data was changed.
+- Created a restricted runtime login (`NOBYPASSRLS`, not superuser) and configured
+  it through a server-only environment variable. Direct tests proved tenant read
+  and write policies apply to the actual hosted login. Those SQL test rows were
+  rolled back, not left in the database.
+- Using the hosted runtime connection and local HTTP application: real signup,
+  denial before verification, actual signed verification-token flow, login,
+  durable enquiry persistence, tenant API isolation and denied customer admin
+  access passed. Verification links came from the pending test outbox; this is
+  **not** a claim that Resend delivered an email.
+- A real `yulaverse.co.uk` technical crawl (one sampled page), admin review and
+  approval, customer PDF download and another customer's denied PDF request
+  passed against Neon. These were explicitly labelled QA fixtures, not customers.
+- Provisioned Stripe Sandbox and configured its test billing portal. A real
+  hosted Stripe Checkout form with Stripe's published test card completed a
+  GBP £99/month **sandbox-only** subscription. Signed Stripe events arrived via
+  Stripe CLI forwarding to the local app and persisted the paid order and active
+  subscription in Neon. The portal displayed the paid test invoice. No real
+  charge or live subscription was created.
+- Portal cancellation scheduled the correct end date. Testing caught Stripe's
+  explicit `cancel_at` timestamp being set even with `cancel_at_period_end=false`;
+  the application now persists that date and caps entitlements at it. A subsequent
+  signed cancellation event revoked access, and the pending monitoring job did
+  not run. Hosted monitoring scheduling deduplicated a second scheduling attempt.
+- Replayed an actual sandbox event twice with the CLI listener's test signing
+  secret: both HTTP requests succeeded with no additional event processing.
+- Removed the five temporary QA accounts, their organisations/records and the
+  test enquiry after verification. The Stripe sandbox subscription was canceled;
+  its provider-side historical test invoice remains clearly labelled test data.
 
 Screenshots and PDFs are ignored local QA artefacts, not application/customer
 records or published production evidence. Provider tests use mocked transport;
@@ -39,13 +73,16 @@ the separately labelled public-site crawl is real.
 
 ## Integration-ready, not represented as live
 
-- Managed PostgreSQL: additive migration and pg connection ready; Neon terms
-  acceptance/provisioning remains with the account holder.
-- Resend: durable outbox/verification/reset/notifications implemented; requires
-  integration acceptance, key, verified sender and actual delivery verification.
+- Managed PostgreSQL: connected and tested in Preview/Development. Production
+  connection, backup/restore policy and operational approval remain outstanding.
+- Resend: existing account chosen; durable outbox/verification/reset/notifications
+  implemented. Account login, key, verified sender and actual inbox delivery
+  verification remain outstanding. No new paid Resend plan was installed.
 - Stripe: test-only hosted checkout/portal and verified idempotent webhooks
-  implemented. Signature fixtures pass, but a real sandbox checkout, subscription,
-  cancellation and webhook delivery still need account access. Live keys refused.
+  implemented. Real sandbox checkout and local signed forwarding passed as above.
+  Public deployed webhook transport is not configured: Vercel's protected preview
+  is not a public provider webhook. Checkout refuses missing signing configuration.
+  Live keys are still refused.
 - OpenAI/Gemini/Anthropic/Perplexity: adapters, reviewed suites, repetitions,
   response evidence, token-cost estimates and conservative budgets implemented.
   No real provider key/model is configured and no paid test was run.

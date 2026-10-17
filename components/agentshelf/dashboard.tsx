@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const VisibilityChart = dynamic(() => import("./visibility-chart"), {
@@ -144,7 +144,7 @@ export function AgentDashboard({
     [editing, setEditing] = useState<Entity<Website> | undefined>(),
     [busy, setBusy] = useState(false);
   const [customerSearch, setCustomerSearch] = useState("");
-  async function refresh() {
+  const refresh = useCallback(async () => {
     if (simulated) return;
     setLoading(true);
     try {
@@ -159,10 +159,10 @@ export function AgentDashboard({
     } finally {
       setLoading(false);
     }
-  }
+  }, [admin, simulated]);
   useEffect(() => {
     void refresh();
-  }, [admin, simulated]);
+  }, [refresh]);
   async function action(path: string, body: unknown) {
     if (simulated) {
       setNotice(
@@ -1055,6 +1055,21 @@ export function AgentDashboard({
                       {o.data.livemode ? "Live" : "Test mode"}
                     </p>
                   ))}
+                  {e.subscription.map((s) => (
+                    <div key={s.id} className="as-muted">
+                      <p>
+                        Monitoring · {s.data.status} ·{" "}
+                        {s.data.livemode ? "Live" : "Test mode"}
+                      </p>
+                      <p>
+                        {s.data.cancelAt
+                          ? `Cancellation scheduled: ${date(s.data.cancelAt)}`
+                          : s.data.cancelAtPeriodEnd
+                            ? `Cancellation scheduled: ${date(s.data.currentPeriodEnd)}`
+                            : `Current period ends: ${date(s.data.currentPeriodEnd)}`}
+                      </p>
+                    </div>
+                  ))}
                 </section>
               )}
               {tab === "Account" && (
@@ -1069,6 +1084,7 @@ export function AgentDashboard({
                   </p>
                   <div className="as-actions">
                     <a
+                      download
                       className="as-button as-button-secondary"
                       href="/api/agentshelf/export"
                     >

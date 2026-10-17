@@ -5,6 +5,7 @@ async function main() {
   loadEnvConfig(process.cwd());
   if (
     process.env.VERCEL ||
+    process.env.AGENTSHELF_DATABASE_URL ||
     process.env.DATABASE_URL ||
     process.env.RESEND_API_KEY
   )

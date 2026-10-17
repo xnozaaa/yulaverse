@@ -1,14 +1,5 @@
 import { randomUUID } from "node:crypto";
-import {
-  activity,
-  find,
-  getDb,
-  list,
-  put,
-  scoped,
-  type Actor,
-  type Entity,
-} from "./db";
+import { activity, find, list, put, scoped, type Actor } from "./db";
 import {
   classifyBusiness,
   crawlWebsite,
@@ -59,6 +50,7 @@ export type Subscription = {
   status: string;
   currentPeriodEnd: string;
   cancelAtPeriodEnd: boolean;
+  cancelAt?: string;
   livemode: boolean;
   stripeEventCreated?: number;
 };
@@ -76,7 +68,8 @@ export function hasMonitoring(s: Subscription | undefined, now = Date.now()) {
   return Boolean(
     s &&
     ["active", "trialing"].includes(s.status) &&
-    new Date(s.currentPeriodEnd).getTime() > now,
+    new Date(s.currentPeriodEnd).getTime() > now &&
+    (!s.cancelAt || new Date(s.cancelAt).getTime() > now),
   );
 }
 export async function requestAudit(

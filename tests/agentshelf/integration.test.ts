@@ -25,6 +25,7 @@ import { runProvider } from "../../lib/agentshelf/intelligence";
 import {
   processStripeEvent,
   stripeClient,
+  checkout,
   type Order,
 } from "../../lib/agentshelf/billing";
 import { POST, GET } from "../../app/api/agentshelf/[...path]/route";
@@ -46,6 +47,7 @@ const call = (path: string, body: unknown, cookies = cookie) =>
     { params: Promise.resolve({ path: [path] }) },
   );
 beforeAll(async () => {
+  vi.stubEnv("AGENTSHELF_DATABASE_URL", "");
   vi.stubEnv("DATABASE_URL", "");
   vi.stubEnv("AGENTSHELF_LOCAL_DB", "memory://");
   vi.stubEnv("VERCEL", "");
@@ -252,6 +254,16 @@ describe("Verified authentication and API access", () => {
   });
 });
 describe("Audit lifecycle and delivery", () => {
+  it("refuses checkout until webhook verification is configured", async () => {
+    const previous = process.env.STRIPE_WEBHOOK_SECRET;
+    vi.stubEnv("STRIPE_WEBHOOK_SECRET", "");
+    const before = (await list(alice, "order")).length;
+    await expect(checkout(alice, "audit")).rejects.toThrow(
+      "signed Stripe webhook",
+    );
+    expect(await list(alice, "order")).toHaveLength(before);
+    vi.stubEnv("STRIPE_WEBHOOK_SECRET", previous || "");
+  });
   it("atomically deduplicates concurrent assessment requests", async () => {
     const w = await put(alice, "website", { ...site, competitors: [] });
     const [a, b] = await Promise.all([
@@ -490,6 +502,34 @@ describe("Signed billing event controls", () => {
         (s) => s.data.stripeId === subscription.id,
       )?.data.status,
     ).toBe("canceled");
+  });
+  it("retains an explicit Stripe cancellation date when the period-end flag is false", async () => {
+    await processStripeEvent(
+      {
+        id: "evt_scheduled_cancellation",
+        created: 300,
+        livemode: false,
+        type: "customer.subscription.updated",
+        data: {
+          object: {
+            id: "sub_explicit_cancel",
+            customer: "cus_qa",
+            status: "active",
+            metadata: { orgId: alice.orgId },
+            livemode: false,
+            cancel_at_period_end: false,
+            cancel_at: 2000000000,
+            items: { data: [{ current_period_end: 2000000000 }] },
+          },
+        },
+      } as unknown as Stripe.Event,
+      {} as Stripe,
+    );
+    const row = (await list<Subscription>(alice, "subscription")).find(
+      (s) => s.data.stripeId === "sub_explicit_cancel",
+    )!;
+    expect(row.data.cancelAtPeriodEnd).toBe(false);
+    expect(row.data.cancelAt).toBe(new Date(2000000000 * 1000).toISOString());
   });
   it("validates a Stripe SDK-generated signature through the webhook route", async () => {
     vi.stubEnv("STRIPE_SECRET_KEY", "sk_test_fixture");

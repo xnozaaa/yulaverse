@@ -186,7 +186,8 @@ export function validateFeed(csv: string): FeedResult {
           (products.length * 6),
       )
     : null;
-  const safe = (v: string) => (/^[=+\-@\t\r]/.test(v) ? `'${v}` : v);
+  const safe = (v: string) =>
+    /^[\t\r\n]/.test(v) || /^\s*[=+\-@]/.test(v) ? `'${v}` : v;
   return {
     products,
     issues,

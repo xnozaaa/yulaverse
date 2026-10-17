@@ -83,7 +83,9 @@ export const enquiryInput = z.object({
 
 export function integrationStatus() {
   return {
-    database: Boolean(process.env.DATABASE_URL),
+    database: Boolean(
+      process.env.AGENTSHELF_DATABASE_URL || process.env.DATABASE_URL,
+    ),
     authentication: Boolean(process.env.BETTER_AUTH_SECRET),
     email: Boolean(
       process.env.RESEND_API_KEY && process.env.AGENTSHELF_EMAIL_FROM,

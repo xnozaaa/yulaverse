@@ -13,6 +13,7 @@ const query: TestQuery = {
   approved: true,
 };
 beforeAll(async () => {
+  vi.stubEnv("AGENTSHELF_DATABASE_URL", "");
   vi.stubEnv("DATABASE_URL", "");
   vi.stubEnv("VERCEL", "");
   vi.stubEnv("AGENTSHELF_LOCAL_DB", "memory://");
@@ -136,14 +137,12 @@ describe("Controlled provider adapters with mocked transport, no paid requests",
   });
   it("stops at the per-organisation attempt limit", async () => {
     vi.stubEnv("AGENTSHELF_MAX_TESTS_PER_ORG_MONTH", "1");
-    const transport = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(
-        Response.json({
-          output: [{ content: [{ text: "Other businesses exist." }] }],
-          usage: { input_tokens: 10, output_tokens: 10 },
-        }),
-      );
+    const transport = vi.fn<typeof fetch>().mockResolvedValue(
+      Response.json({
+        output: [{ content: [{ text: "Other businesses exist." }] }],
+        usage: { input_tokens: 10, output_tokens: 10 },
+      }),
+    );
     await runProvider("openai", query, [], "org-one-attempt", transport);
     expect(
       (await runProvider("openai", query, [], "org-one-attempt", transport))

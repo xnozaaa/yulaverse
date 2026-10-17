@@ -23,6 +23,7 @@ type Database = {
 const state = globalThis as typeof globalThis & { agentDb?: Promise<Database> };
 export function dbConfigured() {
   return Boolean(
+    process.env.AGENTSHELF_DATABASE_URL ||
     process.env.DATABASE_URL ||
     (!process.env.VERCEL && process.env.AGENTSHELF_LOCAL_DB),
   );
@@ -33,9 +34,11 @@ export function getDb(): Promise<Database> {
       "SETUP_REQUIRED: Connect a PostgreSQL database before accepting customer data.",
     );
   return (state.agentDb ??= (async () => {
-    if (process.env.DATABASE_URL) {
+    const connectionString =
+      process.env.AGENTSHELF_DATABASE_URL || process.env.DATABASE_URL;
+    if (connectionString) {
       const pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
+        connectionString,
         max: 5,
         connectionTimeoutMillis: 10000,
         idleTimeoutMillis: 20000,

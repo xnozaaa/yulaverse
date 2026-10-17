@@ -36,8 +36,12 @@ async function main() {
     );
     return;
   }
-  const { getDb } = await import("../lib/agentshelf/db");
   if (command === "migrate") {
+    if (process.env.AGENTSHELF_DATABASE_URL && !process.env.DATABASE_URL)
+      throw new Error("Migrations require the owner DATABASE_URL connection.");
+    // Managed owner credentials are used only by this explicit operator command.
+    delete process.env.AGENTSHELF_DATABASE_URL;
+    const { getDb } = await import("../lib/agentshelf/db");
     await (await getDb()).migrate();
     console.log("AgentShelf additive migration applied.");
     return;

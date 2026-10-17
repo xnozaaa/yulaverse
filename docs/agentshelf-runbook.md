@@ -17,14 +17,20 @@ optimisation and £99/month monitoring. VAT wording is a separate setting.
   configuration. There is deliberately no filesystem database fallback on Vercel.
   The public pages and demonstration still work while these are absent.
 - **Payments:** Stripe test keys only. Live keys are refused. A success URL alone
-  never activates a subscription. Hosted checkout has not been validated against
-  a real Stripe sandbox until account access is configured.
+  never activates a subscription. Checkout, signed webhook delivery, the portal
+  and subscription cancellation have been exercised against the provisioned
+  Stripe sandbox with the hosted test database and a local Stripe CLI listener.
+  This does not establish deployed webhook delivery or enable live charging.
 - **AI providers:** calls default off. Each selected provider needs a legitimate
   key, model identifier, current token prices and explicit usage budgets. Missing
   configuration produces setup-required evidence, never invented measurements.
 
-Neon, Resend and Stripe Marketplace provisioning currently require the account
-holder to accept their terms. No paid plans or live charges were authorised.
+On 17 October 2026 the account holder confirmed Marketplace terms acceptance.
+Neon Free (`agentshelf-db`, London) and Stripe Sandbox (`agentshelf-stripe-test`)
+are connected to **Preview and Development only**. Production is unchanged.
+Resend's native Marketplace plans are paid, so none was installed: the owner chose
+their existing Resend account. Its API key, verified sender and real inbox delivery
+test are still required. No paid plan, live charge or paid AI call was enabled.
 
 ## Run locally
 
@@ -65,23 +71,24 @@ part of a deployment. Do not use this helper for real customers.
 
 All supported names and defaults are in `.env.example`. None are `NEXT_PUBLIC_`.
 
-| Variables                                             | Requirement                                                                                              |
-| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `DATABASE_URL`                                        | Required for hosted data; use the provider's TLS-enabled pooled PostgreSQL URL.                          |
-| `BETTER_AUTH_SECRET`                                  | Required, random 32+ characters; stable across deployments.                                              |
-| `BETTER_AUTH_URL`                                     | Production origin `https://yulaverse.co.uk`; omit in previews only when origin inference is appropriate. |
-| `AGENTSHELF_ADMIN_EMAILS`                             | Verified email allowlist, comma-separated; no client role escalation.                                    |
-| `RESEND_API_KEY`, `AGENTSHELF_EMAIL_FROM`             | Required for real verification, password reset and notifications; verify the sender's DNS first.         |
-| `AGENTSHELF_ALERT_EMAIL`                              | Optional operations destination; defaults to the studio email.                                           |
-| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`          | Optional **test** checkout/webhooks. Billing portal must be enabled in the Stripe sandbox.               |
-| `CRON_SECRET`                                         | Optional scheduler; random 24+ characters, matched against Bearer authentication.                        |
-| `AGENTSHELF_*_PENCE`                                  | Optional central integer GBP prices.                                                                     |
-| `AGENTSHELF_VAT_PRESENTATION`                         | Required business decision before taking payment; not a VAT-registration assumption.                     |
-| `AGENTSHELF_AI_ENABLED`                               | Defaults false. Explicitly enable only after keys, model costs and budget approval.                      |
-| `AGENTSHELF_<PROVIDER>_MODEL` and input/output prices | Required for every used AI adapter; see `.env.example`.                                                  |
-| `AGENTSHELF_PERPLEXITY_REQUEST_USD`                   | Additional required search/request fee for the chosen Perplexity model.                                  |
-| Usage/month/cadence settings                          | Optional conservative defaults; increase only after reviewing the spend model.                           |
-| `AGENTSHELF_LOCAL_DB`                                 | Local only; do not deploy this value.                                                                    |
+| Variables                                             | Requirement                                                                                                             |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`                                        | Required for hosted data; use the provider's TLS-enabled pooled PostgreSQL URL.                                         |
+| `AGENTSHELF_DATABASE_URL`                             | Recommended runtime override, with a limited `NOBYPASSRLS` login; owner `DATABASE_URL` remains for explicit migrations. |
+| `BETTER_AUTH_SECRET`                                  | Required, random 32+ characters; stable across deployments.                                                             |
+| `BETTER_AUTH_URL`                                     | Production origin `https://yulaverse.co.uk`; omit in previews only when origin inference is appropriate.                |
+| `AGENTSHELF_ADMIN_EMAILS`                             | Verified email allowlist, comma-separated; no client role escalation.                                                   |
+| `RESEND_API_KEY`, `AGENTSHELF_EMAIL_FROM`             | Required for real verification, password reset and notifications; verify the sender's DNS first.                        |
+| `AGENTSHELF_ALERT_EMAIL`                              | Optional operations destination; defaults to the studio email.                                                          |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`          | Optional **test** checkout/webhooks. Billing portal must be enabled in the Stripe sandbox.                              |
+| `CRON_SECRET`                                         | Optional scheduler; random 24+ characters, matched against Bearer authentication.                                       |
+| `AGENTSHELF_*_PENCE`                                  | Optional central integer GBP prices.                                                                                    |
+| `AGENTSHELF_VAT_PRESENTATION`                         | Required business decision before taking payment; not a VAT-registration assumption.                                    |
+| `AGENTSHELF_AI_ENABLED`                               | Defaults false. Explicitly enable only after keys, model costs and budget approval.                                     |
+| `AGENTSHELF_<PROVIDER>_MODEL` and input/output prices | Required for every used AI adapter; see `.env.example`.                                                                 |
+| `AGENTSHELF_PERPLEXITY_REQUEST_USD`                   | Additional required search/request fee for the chosen Perplexity model.                                                 |
+| Usage/month/cadence settings                          | Optional conservative defaults; increase only after reviewing the spend model.                                          |
+| `AGENTSHELF_LOCAL_DB`                                 | Local only; do not deploy this value.                                                                                   |
 
 Configure Preview and Production separately using Vercel's secure environment
 settings. Never paste a key into source, a screenshot, a public client variable or
@@ -98,6 +105,25 @@ advisory lock for hosted PostgreSQL, creates only `as_`-prefixed tables and inde
 and installs tenant policies; it does not drop studio data. Review it before
 running against an existing shared database. A limited runtime database role
 without `BYPASSRLS` is preferable to using an owner/superuser connection.
+The connected Neon owner's role does bypass row policies. The hosted test
+environment therefore uses a separate `agentshelf_runtime` login with DML grants
+only on the `as_` tables, no superuser/role-creation privileges and no RLS bypass.
+`AGENTSHELF_DATABASE_URL` selects it. Tests against this actual role confirmed
+cross-tenant reads and writes are blocked, including an unscoped read returning
+no records. When adding future tables, grant the runtime role the required DML
+permissions explicitly; never give it the owner role or `BYPASSRLS`.
+
+### Protected preview and Stripe
+
+Vercel Deployment Protection remains enabled. Stripe cannot authenticate through
+that protection as a customer browser can. The sandbox lifecycle was verified
+using Stripe CLI forwarding to a local app connected to Neon, not by claiming the
+protected preview can receive public provider events. Preview checkout remains
+setup-required until an appropriate deployed webhook transport and its signing
+secret are configured. Do not paste the CLI listener secret into Vercel as though
+it were a public endpoint's secret. Configure an actual Stripe endpoint on the
+eventual accessible deployment, then test delivery before enabling checkout.
+The application refuses checkout when `STRIPE_WEBHOOK_SECRET` is absent.
 
 ## Commercial delivery workflow
 
@@ -182,6 +208,7 @@ passwords, session cookies, database URLs or API keys.
 
 ```sh
 npm run typecheck
+npm run lint
 npm test
 npm run build
 npm run agentshelf:demo-report
@@ -190,7 +217,8 @@ npm run test:agentshelf:e2e
 
 The integration tests use an isolated in-memory PostgreSQL engine, real auth and
 API code, fixture HTML and signed-event fixtures. They do not run a real paid API
-or Stripe checkout. Browser tests support Chromium, Firefox and WebKit through
+or Stripe checkout; the separately documented sandbox verification does. Browser
+tests support Chromium, Firefox and WebKit through
 `AGENTSHELF_ALL_BROWSERS=true`, with desktop/mobile screenshots. The authenticated
 local browser scenario additionally uses `AGENTSHELF_AUTH_E2E=true` after the
 local-only fixture script. See the verification report for actual results and

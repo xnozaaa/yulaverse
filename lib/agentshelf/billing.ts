@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { find, getDb, list, put, activity, type Actor } from "./db";
+import { getDb, list, put, activity, type Actor } from "./db";
 import { packages, appUrl, type PackageId } from "./config";
 import type { Subscription } from "./workflow";
 import { randomUUID } from "node:crypto";
@@ -24,6 +24,10 @@ export function stripeClient() {
   return new Stripe(key, { maxNetworkRetries: 1, timeout: 15000 });
 }
 export async function checkout(actor: Actor, id: PackageId) {
+  if (!process.env.STRIPE_WEBHOOK_SECRET)
+    throw new Error(
+      "SETUP_REQUIRED: Configure signed Stripe webhook delivery before starting checkout.",
+    );
   const pack = packages().find((p) => p.id === id);
   if (!pack) throw new Error("Unknown package");
   const stripe = stripeClient();
@@ -225,6 +229,9 @@ function subscriptionData(s: Stripe.Subscription): Subscription {
     status: s.status,
     currentPeriodEnd: new Date(end * 1000).toISOString(),
     cancelAtPeriodEnd: s.cancel_at_period_end,
+    ...(s.cancel_at
+      ? { cancelAt: new Date(s.cancel_at * 1000).toISOString() }
+      : {}),
     livemode: s.livemode,
   };
 }
