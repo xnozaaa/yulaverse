@@ -87,6 +87,14 @@ the separately labelled public-site crawl is real.
   sent through the actual application outbox and marked sent with its body
   cleared. Resend's message detail showed **Delivered**. This verifies acceptance
   by the receiving mail server, not inbox-versus-spam placement.
+- Refreshed the protected Preview deployment to receive the new environment
+  snapshot. Submitted its actual browser enquiry form using an owner's controlled
+  Gmail alias and a clearly labelled QA business. The form reported success,
+  Neon retained the enquiry/consent, and both the customer acknowledgement and
+  studio alert were marked **Delivered** in Resend. Their sent outbox bodies were
+  cleared. Removed only those known QA records after checking; provider-side
+  delivery history remains available. The live studio homepage still returned
+  HTTP 200 and was not promoted or changed.
 
 ## Integration-ready, not represented as live
 
