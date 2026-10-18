@@ -29,8 +29,14 @@ On 17 October 2026 the account holder confirmed Marketplace terms acceptance.
 Neon Free (`agentshelf-db`, London) and Stripe Sandbox (`agentshelf-stripe-test`)
 are connected to **Preview and Development only**. Production is unchanged.
 Resend's native Marketplace plans are paid, so none was installed: the owner chose
-their existing Resend account. Its API key, verified sender and real inbox delivery
-test are still required. No paid plan, live charge or paid AI call was enabled.
+their existing Free account. On 18 October, `send.yulaverse.co.uk` was verified
+using three isolated subdomain DNS records at Spaceship. The existing website and
+email records were preserved. A sending-only key restricted to this domain and
+`Yulaverse Intelligence <noreply@send.yulaverse.co.uk>` are configured in Preview
+and Development only. Enforced TLS is enabled; receiving and tracking remain off.
+A real message passed through the hosted database outbox and Resend reported
+delivery to the owner's Gmail server. This confirms server acceptance, not inbox
+placement. No paid plan, live charge or paid AI call was enabled.
 
 ## Run locally
 
@@ -66,6 +72,13 @@ cannot arrive in an inbox. The local-only browser fixture script verifies test
 accounts using their actual generated verification links; it refuses hosted
 databases, Vercel and an enabled Resend key. Its ignored credential file is never
 part of a deployment. Do not use this helper for real customers.
+
+With a real Resend key configured, email tests must use a controlled recipient,
+not fabricated customer addresses. Do not run old QA fixture scripts that assume
+transport is disabled. Confirm the queue contains no unrelated pending messages
+before an operational send test; inspect the matching message in Resend for
+delivery status. Never expose the key or private verification/reset links in logs.
+Vercel environment changes apply to new deployments, not existing snapshots.
 
 ## Hosted configuration
 

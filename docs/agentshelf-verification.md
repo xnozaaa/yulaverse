@@ -1,12 +1,12 @@
 # AgentShelf verification and release status
 
-Updated: 17 October 2026. Baseline studio commit: `5dbdcab`.
+Updated: 18 October 2026. Baseline studio commit: `5dbdcab`.
 Repository: `xnozaaa/yulaverse`; implementation branch: `codex/agentshelf`.
 
 ## Verified locally
 
 - TypeScript type checking passed.
-- 80 unit/integration tests across five files passed. These exercise real PGlite
+- 87 unit/integration tests across six files passed. These exercise real PGlite
   PostgreSQL, verified Better Auth accounts, tenant CRUD and database RLS,
   optimistic versions, durable enquiries/outbox, origin/consent checks, atomic
   audit deduplication and report approval, report isolation, retention, robots
@@ -14,6 +14,9 @@ Repository: `xnozaaa/yulaverse`; implementation branch: `codex/agentshelf`.
   parsing/scoring, alias extraction, metric denominators, noisy-alert suppression,
   CSV/GTIN/formula safety, provider adapters with mocked real-format responses,
   provider failure/budgets, signed Stripe webhook handling and entitlements.
+  Seven dedicated mail checks cover setup-required persistence, recipient
+  validation, stable idempotency, sent-body clearing, delayed retries, transport
+  uncertainty, batch limits and the five-attempt ceiling using mocked transport.
 - Browser public workflow passed in **Chromium, Firefox and WebKit**, each at
   1440px desktop and 390px mobile: service/pricing, clearly simulated dashboard
   charts, recommendations, PDF download, no horizontal overflow, no uncaught
@@ -71,13 +74,29 @@ Screenshots and PDFs are ignored local QA artefacts, not application/customer
 records or published production evidence. Provider tests use mocked transport;
 the separately labelled public-site crawl is real.
 
+## Real email connection, 18 October
+
+- Used the existing Resend Free account, not the paid Marketplace integration.
+  Added and verified only `send.yulaverse.co.uk`, with three exact DNS records at
+  Spaceship. Existing website A/CNAME and email records were not replaced.
+- Created one sending-only API key restricted to this sender domain. Configured
+  it in Vercel Preview and Development only; no production or Shongo keys changed.
+  Secret values were not committed, printed or included in test screenshots.
+- Enabled enforced TLS on this new sender. Receiving and tracking remain disabled.
+- A real operational message to the owner's Gmail address was persisted in Neon,
+  sent through the actual application outbox and marked sent with its body
+  cleared. Resend's message detail showed **Delivered**. This verifies acceptance
+  by the receiving mail server, not inbox-versus-spam placement.
+
 ## Integration-ready, not represented as live
 
 - Managed PostgreSQL: connected and tested in Preview/Development. Production
   connection, backup/restore policy and operational approval remain outstanding.
-- Resend: existing account chosen; durable outbox/verification/reset/notifications
-  implemented. Account login, key, verified sender and actual inbox delivery
-  verification remain outstanding. No new paid Resend plan was installed.
+- Resend: existing account, restricted sending key, verified domain and real
+  delivery tested in Preview/Development as above. Signup/reset/notifications use
+  this durable transport; a customer's mailbox placement still depends on their
+  provider. Production configuration and a launch-domain delivery check remain
+  outstanding. No new paid Resend plan was installed.
 - Stripe: test-only hosted checkout/portal and verified idempotent webhooks
   implemented. Real sandbox checkout and local signed forwarding passed as above.
   Public deployed webhook transport is not configured: Vercel's protected preview
