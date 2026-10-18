@@ -1,0 +1,23 @@
+export const migration = `
+CREATE TABLE IF NOT EXISTS as_user (id text PRIMARY KEY,name text NOT NULL,email text UNIQUE NOT NULL,email_verified boolean NOT NULL DEFAULT false,image text,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_session(id text PRIMARY KEY,user_id text NOT NULL REFERENCES as_user(id) ON DELETE CASCADE,token text UNIQUE NOT NULL,expires_at timestamptz NOT NULL,ip_address text,user_agent text,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_account(id text PRIMARY KEY,user_id text NOT NULL REFERENCES as_user(id) ON DELETE CASCADE,account_id text NOT NULL,provider_id text NOT NULL,access_token text,refresh_token text,id_token text,access_token_expires_at timestamptz,refresh_token_expires_at timestamptz,scope text,password text,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now(),UNIQUE(provider_id,account_id));
+CREATE TABLE IF NOT EXISTS as_verification(id text PRIMARY KEY,identifier text NOT NULL,value text NOT NULL,expires_at timestamptz NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_auth_rate_limit(id text PRIMARY KEY,key text UNIQUE NOT NULL,count integer NOT NULL,last_request bigint NOT NULL);
+ALTER TABLE as_auth_rate_limit ALTER COLUMN last_request TYPE bigint USING last_request::bigint;
+CREATE TABLE IF NOT EXISTS as_organisations(id text PRIMARY KEY,name text NOT NULL,created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_memberships(user_id text NOT NULL REFERENCES as_user(id) ON DELETE CASCADE,org_id text NOT NULL REFERENCES as_organisations(id) ON DELETE CASCADE,role text NOT NULL CHECK(role IN ('owner','member')),PRIMARY KEY(user_id,org_id));
+CREATE TABLE IF NOT EXISTS as_records(id text PRIMARY KEY,org_id text NOT NULL REFERENCES as_organisations(id) ON DELETE CASCADE,kind text NOT NULL,data jsonb NOT NULL,version integer NOT NULL DEFAULT 1,created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS as_records_tenant_kind ON as_records(org_id,kind,created_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS as_job_unique ON as_records((data->>'uniqueKey')) WHERE kind='job';
+CREATE UNIQUE INDEX IF NOT EXISTS as_subscription_unique ON as_records((data->>'stripeId')) WHERE kind='subscription';
+CREATE TABLE IF NOT EXISTS as_leads(id text PRIMARY KEY,data jsonb NOT NULL,created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_outbox(id text PRIMARY KEY,org_id text,recipient text NOT NULL,subject text NOT NULL,body text NOT NULL,state text NOT NULL DEFAULT 'pending',attempts integer NOT NULL DEFAULT 0,error text,next_at timestamptz NOT NULL DEFAULT now(),created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_events(id text PRIMARY KEY,org_id text,actor text NOT NULL,action text NOT NULL,details jsonb NOT NULL DEFAULT '{}',created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_webhooks(id text PRIMARY KEY,processed_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS as_limits(key text PRIMARY KEY,count integer NOT NULL,reset_at timestamptz NOT NULL);
+ALTER TABLE as_records ENABLE ROW LEVEL SECURITY;
+ALTER TABLE as_records FORCE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS as_tenant ON as_records;
+CREATE POLICY as_tenant ON as_records USING (org_id=current_setting('agentshelf.org_id',true) OR current_setting('agentshelf.admin',true)='true') WITH CHECK(org_id=current_setting('agentshelf.org_id',true) OR current_setting('agentshelf.admin',true)='true');
+`;

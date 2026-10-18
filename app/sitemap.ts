@@ -15,5 +15,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    ...[
+      "/ai-visibility",
+      "/ai-visibility/methodology",
+      "/ai-visibility/privacy",
+      "/ai-visibility/terms",
+      "/agentshelf",
+    ].map((path) => ({
+      url: `${siteUrl}${path}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 }

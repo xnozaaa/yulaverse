@@ -5,6 +5,16 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: [
+        "/admin/",
+        "/api/",
+        "/agentshelf/dashboard",
+        "/agentshelf/onboarding",
+        "/agentshelf/reports",
+        "/agentshelf/account",
+        "/agentshelf/billing",
+        "/agentshelf/demo",
+      ],
     },
     sitemap: "https://yulaverse.co.uk/sitemap.xml",
     host: "https://yulaverse.co.uk",

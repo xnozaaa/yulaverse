@@ -4,6 +4,20 @@ A production-ready portfolio for Yulaverse Studio, built with Next.js App Router
 
 ## Run locally
 
+### Yulaverse Intelligence / AgentShelf
+
+The existing studio now has an integrated AI Visibility service and AgentShelf
+workspace. Start with the [operator runbook](docs/agentshelf-runbook.md),
+[cost model](docs/agentshelf-costs.md) and
+[verification/status report](docs/agentshelf-verification.md).
+External database/email/Stripe provisioning is separate from implementation;
+unconfigured integrations never generate fake results or payments.
+
+For the fully labelled fictional workspace, open `/agentshelf/demo`. For local
+persistent development, run `npm run agentshelf:setup` and use port 3001.
+
+### Existing studio only
+
 ```bash
 npm install
 npm run dev
